@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/11/24/%E8%B0%83%E8%AF%95%E5%99%A8%E8%AE%BE%E8%AE%A1/1.png">
 <meta property="og:image" content="http://yoursite.com/2020/11/24/%E8%B0%83%E8%AF%95%E5%99%A8%E8%AE%BE%E8%AE%A1/2.png">
 <meta property="article:published_time" content="2020-11-24T01:25:11.000Z">
-<meta property="article:modified_time" content="2020-11-24T07:51:34.778Z">
+<meta property="article:modified_time" content="2020-11-24T08:19:27.471Z">
 <meta property="article:author" content="zhizhi">
 <meta property="article:tag" content="逆向工程">
 <meta name="twitter:card" content="summary">
@@ -208,9 +208,7 @@
 <h4 id="4-1-软件断点"><a href="#4-1-软件断点" class="headerlink" title="4.1 软件断点"></a>4.1 软件断点</h4><blockquote>
 <p>软件断点具体而言就是在CPU执行到特定位置的代码的时候使其暂停。本质是一个单字节的指令，用于暂停被执行程序，并将控制权转移给调试器的断点处理函数。</p>
 </blockquote>
-<p>例指令发生在地址0x4433221，一般这样显示</p>
-<p>0x44332211:               8BC3            MOV  EAX, EBX</p>
-<p>这里显示了地址、操作码、汇编指令</p>
+<p>例指令发生在地址0x4433221，一般这样显示<br>0x44332211:               8BC3            MOV  EAX, EBX<br>这里显示了地址、操作码、汇编指令</p>
 <blockquote>
 <p>为了在这个地址设置断点，暂停CPU，我们将从2个字节的8BC3操作码中换出一个单字节的操作码。这个单字节的操作码就是3号中断指令（INT3），一条能让CPU暂停的指令。3号终端码换成操作码就是0xCC。</p>
 </blockquote>
@@ -226,7 +224,34 @@
 </blockquote>
 <p>（1）一次性断点：一旦断点被触发（命中）一次，它就会从内     部中断列表中消除掉。<br>（2）持续性断点：在CPU触发后会重新存储在内部的断点列表中，以后每次运行到这里还会中断。</p>
 <p><strong>问题：</strong>当你改变了被调试程序的内存数据时，你同时改变了运行时的软件的循环冗余码校验和（CRC）。CRC是一种校验数据是否被改动的函数。<br>为了在 这种特殊的情况下也能正常进行调试工作，就要使用硬件断点了。</p>
-<h4 id="4-2-硬件断点"><a href="#4-2-硬件断点" class="headerlink" title="4.2 硬件断点"></a>4.2 硬件断点</h4>
+<h4 id="4-2-硬件断点"><a href="#4-2-硬件断点" class="headerlink" title="4.2 硬件断点"></a>4.2 硬件断点</h4><blockquote>
+<p>这种类型的断点被设置在CPU级别，并用特定的寄存器：调试寄存器。<br>一个CPU一般会有8个调试寄存器（DR0寄存器到DR7寄存器 ），他们被用于管理硬件断点。</p>
+<ul>
+<li>调试寄存器DR0~DR3存储硬件断点地址（意味着同一时间内最多只能有4个硬件断点）</li>
+<li>D4和DR5保留</li>
+<li>DR6是状态寄存器，说明被断点触发的调试事件的类型。</li>
+<li>DR7是一个硬件断点的开关寄存器，同时也存储了 断点的不同类型<br>通过在DR7里设置不同标志，可创建以下 几种断点：<ul>
+<li>当特定的地址上有指令执行的时候中断</li>
+<li>当特定的地址上有数据可以写入的时候</li>
+<li>当特定的地址上有数据读或者写但不执行的时候</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>和软件断点 不同，硬件断点不是用INT3中断，而是用<strong>INT1（1号中断）</strong>。INT1负责硬件中断和步进事件。（步进意味着一步一步的执行指令，从而精确的观察关键代码以便监视数据的变化）</p>
+<p><strong>问题：</strong>同一时间只能设置4个断点，断点起作用的区域只有4个字节（也就是检测4个字节的内存数据改变）。无法跟踪一大块内存数据，所以要用到内存断点。</p>
+<h4 id="4-3-内存断点"><a href="#4-3-内存断点" class="headerlink" title="4.3 内存断点"></a>4.3 内存断点</h4><blockquote>
+<p>内存断点不是真正的断点。当一个调试器设置了一个内存断点的时候，其实是改变了内存中某个块或者页的权限。</p>
+</blockquote>
+<p>一个<strong>内存页</strong>是操作系统处理的最小内存单位。一个内存页被申请成功以后就拥有一个权限集，它决定了内存该如何被访问。</p>
+<ul>
+<li>可执行页：允许执行但不允许读或写，否则抛出异常</li>
+<li>可读页：只允许从页面中读取数据，其余的则抛出异常</li>
+<li>可写页：允许将数据写入页面</li>
+<li>保护页：任何对保护页的访问都会引发异常，之后页面恢复访问前的状态。</li>
+</ul>
+<p><strong>保护页</strong>：常被用于分离堆和栈或者确保一部分内存数据不会增长出边界。</p>
+
       
 
       
@@ -359,7 +384,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-通用CPU寄存器"><span class="toc-number">1.</span> <span class="toc-text">1. 通用CPU寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-栈"><span class="toc-number">2.</span> <span class="toc-text">2. 栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-调试事件"><span class="toc-number">3.</span> <span class="toc-text">3. 调试事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-断点"><span class="toc-number">4.</span> <span class="toc-text">4. 断点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-软件断点"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 软件断点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-硬件断点"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 硬件断点</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-通用CPU寄存器"><span class="toc-number">1.</span> <span class="toc-text">1. 通用CPU寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-栈"><span class="toc-number">2.</span> <span class="toc-text">2. 栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-调试事件"><span class="toc-number">3.</span> <span class="toc-text">3. 调试事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-断点"><span class="toc-number">4.</span> <span class="toc-text">4. 断点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-软件断点"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 软件断点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-硬件断点"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 硬件断点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-内存断点"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 内存断点</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
