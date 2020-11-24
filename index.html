@@ -146,6 +146,96 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-调试器设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/24/%E8%B0%83%E8%AF%95%E5%99%A8%E8%AE%BE%E8%AE%A1/">调试器设计</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/24/%E8%B0%83%E8%AF%95%E5%99%A8%E8%AE%BE%E8%AE%A1/" class="archive-article-date">
+  	<time datetime="2020-11-24T01:25:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<ol>
+<li>白盒测试：已知源代码的情况下进行测试</li>
+<li>黑盒测试：源代码未知，只能看到反汇编代码<ul>
+<li>用户模式：权限最低</li>
+<li>内核模式：权限最高</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<h3 id="1、通用CPU寄存器"><a href="#1、通用CPU寄存器" class="headerlink" title="1、通用CPU寄存器"></a>1、通用CPU寄存器</h3><blockquote>
+<p>一个CPU有8个通用寄存器：EAX,EDX,ECX,ESI,EDI,EBP,ESP,EBX</p>
+</blockquote>
+<ol>
+<li>EAX寄存器（累加寄存器）：用于存储函数的返回值也用于执行计算的操作</li>
+<li></li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">逆向工程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/24/%E8%B0%83%E8%AF%95%E5%99%A8%E8%AE%BE%E8%AE%A1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Simple-use-of-blogs" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -369,6 +459,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">逆向工程</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
