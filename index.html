@@ -179,10 +179,12 @@
 <h3 id="1、通用CPU寄存器"><a href="#1、通用CPU寄存器" class="headerlink" title="1、通用CPU寄存器"></a>1、通用CPU寄存器</h3><blockquote>
 <p>一个CPU有8个通用寄存器：EAX,EDX,ECX,ESI,EDI,EBP,ESP,EBX</p>
 </blockquote>
-<ol>
-<li>EAX寄存器（累加寄存器）：用于存储函数的返回值也用于执行计算的操作</li>
-<li></li>
-</ol>
+<p>1.<strong>EAX寄存器（累加寄存器）</strong>：用于存储函数的返回值也用于执行计算的操作</p>
+<p>2.<strong>EDX寄存器（数据寄存器）</strong>：本质上来说是EAX寄存器的延伸，辅助EAX完成更多复杂的计算操作像乘法和除法。也可当通用寄存器使用，不过更多的是结合EAX寄存器完成计算操作。<br>3.<strong>ECX寄存器（计数寄存器）</strong>：用于循环操作，如重复的字符存储操作或数字统计。ECX寄存器的计算是向下的（简单理解 就是循环操作时是由大减到小的）。<br><br>4.<strong>ESI寄存器</strong>：源操作数指针，存储着输入数据流的位置，ESI（source index）用于读。<br><br>5.<strong>EDI寄存器</strong>：目的操作数指针，存储了计算结果存储的位置，EDI（destination index）用于写。<br><br>6.<strong>ESP寄存器</strong>：栈指针<br>7.<strong>EBP寄存器</strong>：基指针<br>ESP,EBP共同负责函数的调用和栈的操作。</p>
+<blockquote>
+<p>当一个函数被调用的时候，函数需要的参数被陆续压进栈内，最后函数的返回地址也被压入栈内。ESP指着栈顶（也就是返回地址），EBP指着栈底。</p>
+</blockquote>
+<p>8.EBX寄存器：唯一一个无特殊用途的寄存器，作为额外的数据存储器<br><br>9.EIP寄存器：总是指向马上要执行的指令。</p>
 
       
 
