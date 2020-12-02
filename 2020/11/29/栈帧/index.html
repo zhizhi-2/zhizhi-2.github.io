@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/11/29/%E6%A0%88%E5%B8%A7/2.png">
 <meta property="og:image" content="http://yoursite.com/2020/11/29/%E6%A0%88%E5%B8%A7/3.png">
 <meta property="article:published_time" content="2020-11-29T12:58:56.000Z">
-<meta property="article:modified_time" content="2020-12-01T02:24:31.288Z">
+<meta property="article:modified_time" content="2020-12-01T06:30:26.337Z">
 <meta property="article:author" content="zhizhi">
 <meta property="article:tag" content="核心工程，逆向原理">
 <meta name="twitter:card" content="summary">
@@ -71,7 +71,7 @@
 			</ul>
 		</nav>
 		<nav>
-            总文章数 6
+            总文章数 7
         </nav>
 		<nav class="header-smart-menu">
     		
@@ -203,7 +203,7 @@
 <li>参数入栈: 将参数按照调用约定(C 是<strong>从右向左</strong>)依次压入系统栈中;</li>
 <li>返回地址入栈: 将当前代码区调用指令的下一条指令地址压入栈中，供函数返回时继续执行;</li>
 <li>代码跳转: 处理器将代码区跳转到被调用函数的入口处;</li>
-<li>栈帧调整:<br> 1.将调用者的ebp压栈处理，保存指向栈底的ebp的地址（方便函数返回之后的现场恢复），此时esp指向新的栈顶位置； <code>push ebp</code><br> 2.将当前栈帧切换到新栈帧(将esp值装入ebp，更新栈帧底部), 这时ebp指向栈顶，而此时栈顶就是old ebp  <code>mov ebp, esp</code><br> 3.给新栈帧分配空间 <code>sub esp, XXX</code></li>
+<li>栈帧调整:<br> 1、将调用者的ebp压栈处理，保存指向栈底的ebp的地址（方便函数返回之后的现场恢复），此时esp指向新的栈顶位置； <code>push ebp</code><br> 2、将当前栈帧切换到新栈帧(将esp值装入ebp，更新栈帧底部), 这时ebp指向栈顶，而此时栈顶就是old ebp  <code>mov ebp, esp</code><br> 3、给新栈帧分配空间 <code>sub esp, XXX</code></li>
 </ul>
 <blockquote>
 <ol>
@@ -496,6 +496,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">核心工程，逆行原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
             
             <div class="clearfix"></div>

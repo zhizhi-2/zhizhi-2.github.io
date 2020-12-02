@@ -16,9 +16,13 @@
 <meta property="og:description" content="问题描述：使用hexo d将博客部署到github上 时，出现了如下的错误。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/12/01/hexo-d-%E6%97%B6Could-not-read-from-remote-repository/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/01/hexo-d-%E6%97%B6Could-not-read-from-remote-repository/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/01/hexo-d-%E6%97%B6Could-not-read-from-remote-repository/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/01/hexo-d-%E6%97%B6Could-not-read-from-remote-repository/4.png">
 <meta property="article:published_time" content="2020-12-01T01:50:46.000Z">
-<meta property="article:modified_time" content="2020-12-01T06:18:35.480Z">
+<meta property="article:modified_time" content="2020-12-01T06:40:15.833Z">
 <meta property="article:author" content="zhizhi">
+<meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/12/01/hexo-d-%E6%97%B6Could-not-read-from-remote-repository/1.png">
   
@@ -68,7 +72,7 @@
 			</ul>
 		</nav>
 		<nav>
-            总文章数 6
+            总文章数 7
         </nav>
 		<nav class="header-smart-menu">
     		
@@ -191,35 +195,31 @@
 
 <p><strong>解决：</strong>百度后查说是ssh key有问题，连接不上服务器。</p>
 <p><strong>详细步骤：</strong></p>
-<ol>
-<li>删除.ssh文件夹（直接搜索该文件夹）下的known_hosts(手动删除即可，不需要git）</li>
-<li>在下载好的Git中的bin目录下打开bash.exe输入命令<code>ssh-keygen -t rsa -C &quot;username&quot;</code>(注：username为你git上的用户名)，如果执行成功。返回：<pre><code>Generating public/private rsa key pair.</code></pre>   Enter file in which to save the key (/Users/username/.ssh/id_rsa): //这里的username是电脑上的用户名，这个地址也是文件的存储地址，然后我们按回车</li>
-</ol>
+<p>1、删除.ssh文件夹（直接搜索该文件夹）下的known_hosts(手动删除即可，不需要git）</p>
+<p>2、在下载好的Git中的bin目录下打开bash.exe输入命令<code>ssh-keygen -t rsa -C &quot;username&quot;</code>(注：username为你git上的用户名)，如果执行成功。返回：<br>    Generating public/private rsa key pair.<br>   Enter file in which to save the key (/Users/username/.ssh/id_rsa): //这里的username是电脑上的用户名，这个地址也是文件的存储地址，然后我们按回车</p>
 <ul>
-<li>如果你以前有存储地址会返回<br>/Users/your username/.ssh/id_rsa already exists.Overwrite (y/n)?直接输入y回车。</li>
-<li>如果以前没有储存地址就会出现<br>Enter passphrase(empty for no passphrase);也直接回车</li>
-</ul>
+<li><p>如果你以前有存储地址会返回<br>/Users/your username/.ssh/id_rsa already exists.Overwrite (y/n)?直接输入y回车。</p>
+</li>
+<li><p>如果以前没有储存地址就会出现<br>Enter passphrase(empty for no passphrase);也直接回车</p>
 <p>两种情况回车后都会出现 Enter same passphrase again 然后接着回车会显示一长串内容其中还有一些..o.. o oo .oS. 之类的代码，这说明SSH key就已经生成了。文件目录就是：<code>username/.ssh/id_rsa.pub</code></p>
-<ol start="3">
-<li><p>然后找到系统自动在.ssh文件夹下生成两个文件，id_rsa和id_rsa.pub，用记事本打开<code>id_rsa.pub</code>将全部的内容复制。</p>
 </li>
-<li><p>打开<a href="https://github.com/，登陆你的账户，进入设置（Settings）" target="_blank" rel="noopener">https://github.com/，登陆你的账户，进入设置（Settings）</a></p>
-<pre><code>{%asset_image 2.png %} </code></pre></li>
-<li><p>将你复制的内容粘贴到key中</p>
-</li>
-<li><p>点击Add SSH Key</p>
-</li>
-<li><p>仍然在bash.exe中输入<code>ssh -T git@github.com</code>     </p>
-<pre><code>结果出现如下错误：22端口连接超时/被占用。</code></pre>  {%asset_image 3.png %}     
-</li>
-<li><p>在.ssh文件夹下新建一个config文件，不用写后缀名</p>
-</li>
-<li><p>在config文件内写入以下内容并保存</p>
+</ul>
+<p>3、然后找到系统自动在.ssh文件夹下生成两个文件，id_rsa和id_rsa.pub，用记事本打开<code>id_rsa.pub</code>将全部的内容复制。</p>
+<p>4、打开<a href="https://github.com/，登陆你的账户，进入设置（Settings）" target="_blank" rel="noopener">https://github.com/，登陆你的账户，进入设置（Settings）</a></p>
+<img src="/2020/12/01/hexo-d-%E6%97%B6Could-not-read-from-remote-repository/2.png" class> 
+
+<p>5、将你复制的内容粘贴到key中</p>
+<p>6、点击Add SSH Key</p>
+<p>7、仍然在bash.exe中输入<code>ssh -T git@github.com</code> ，结果出现如下错误：22端口连接超时/被占用。</p>
+<img src="/2020/12/01/hexo-d-%E6%97%B6Could-not-read-from-remote-repository/3.png" class>     
+
+<p>8、在.ssh文件夹下新建一个config文件，不用写后缀名</p>
+<p>9、在config文件内写入以下内容并保存</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Host github<span class="selector-class">.com</span>                                  <span class="comment">/*服务器地址为github地址*/</span></span><br><span class="line">User <span class="string">"xxx@xx.com"</span>                          <span class="comment">/*github上的注册邮箱 为用户账号*/</span></span><br><span class="line">Hostname ssh<span class="selector-class">.github</span><span class="selector-class">.com</span>                 <span class="comment">/*服务器地址为github地址*/</span></span><br><span class="line">PreferredAuthentications publickey       <span class="comment">/*采用公匙*/</span></span><br><span class="line">IdentityFile ~/.ssh/id_rsa                    <span class="comment">/*公匙文件路径*/</span></span><br><span class="line">Port <span class="number">443</span>                                               <span class="comment">/*修改端口为443*/</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>再次<code>ssh -T git@github.com</code></p>
-<pre><code>{%asset_image 4.png %}</code></pre></li>
-</ol>
+
+<p>10、再次<code>ssh -T git@github.com</code></p>
+<img src="/2020/12/01/hexo-d-%E6%97%B6Could-not-read-from-remote-repository/4.png" class>
+
 <p>成功解决！！！</p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p><a href="https://www.cnblogs.com/cnlg123/p/7762889.html" target="_blank" rel="noopener">https://www.cnblogs.com/cnlg123/p/7762889.html</a><br><a href="https://www.jianshu.com/p/fe76f9867322" target="_blank" rel="noopener">https://www.jianshu.com/p/fe76f9867322</a></p>
 
@@ -251,6 +251,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -314,6 +325,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/12/01/%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99%E8%B0%83%E8%AF%95%E5%99%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          自己动手写调试器
+        
+      </div>
+    </a>
   
   
     <a href="/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
@@ -461,6 +481,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">核心工程，逆行原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
             
             <div class="clearfix"></div>
