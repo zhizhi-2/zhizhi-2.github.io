@@ -64,7 +64,7 @@
 			</ul>
 		</nav>
 		<nav>
-            总文章数 7
+            总文章数 8
         </nav>
 		<nav class="header-smart-menu">
     		
@@ -148,6 +148,114 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-Latex中插入参考文献" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/">Latex中插入参考文献</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+
+<!--显示阅读次数完毕-->
+
+        
+        <a href="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/" class="archive-article-date">
+  	<time datetime="2020-12-03T07:22:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-03</time>
+</a>
+		 
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在Word中插入参考文献是用了 Endnote插件，在Latex中插入参考文献有直接一条一条的写上去和使用.bib文件这两种方式。</p>
+<h3 id="1-直接写入"><a href="#1-直接写入" class="headerlink" title="1. 直接写入"></a>1. 直接写入</h3><p>使用 <code>\bibitem</code>命令去建立参考文献</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">\begin&#123;thebibliography&#125;&#123;&#125;</span><br><span class="line">% and use \bibitem to create references. Consult the Instructions</span><br><span class="line">% for authors for reference list style.</span><br><span class="line">\bibitem&#123;RefJ&#125;</span><br><span class="line">% Format for Journal Reference</span><br><span class="line">Author, Article title, Journal, Volume, page numbers (year)</span><br><span class="line">% Format for books</span><br><span class="line">\bibitem&#123;RefB&#125;</span><br><span class="line">Author, Book title, page numbers. Publisher, place (year)</span><br><span class="line">% etc</span><br><span class="line">\end&#123;thebibliography&#125;</span><br></pre></td></tr></table></figure>
+
+<p>{RefJ}、{RefB}代表每条参考文献唯一的标签，在正文中使用<code>\cite{RefJ}``\cite{RefB}</code>来引用所对应的参考文献。</p>
+<p>该方法比较繁琐，如果参考文献过多的话使用起来比较复杂也容易出错，所以我们下面使用.bib文件来插入参考文献。</p>
+<h3 id="2-使用-bib文件"><a href="#2-使用-bib文件" class="headerlink" title="2. 使用.bib文件"></a>2. 使用.bib文件</h3><blockquote>
+<p>在使用此类方法时会用到两种文件</p>
+<ul>
+<li>.bib文件：你的参考文献数据文件</li>
+<li>bst文件：一般由期刊或者杂志提供, bst设定了参考文献出现在文末出现的格式，例如设置排序方式，设置作者名按缩写的方式还是不缩写等等。</li>
+</ul>
+</blockquote>
+<p>.bib文件的样子类似json文件，由标签和键值组成。</p>
+<img src="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/1.png" class title=".bib文件的组成">
+
+<blockquote>
+<ul>
+<li>@CONFERENCE 这些指定了文献的类型。常用类型有：</li>
+</ul>
+<p><strong>@article</strong>     An article from a journal or magazine<br><strong>@book</strong>       A book with an explicit publisher<br><strong>@booklet</strong>     A work that is printed and bound, but without a named publisher or sponsoring institution <strong>@conference</strong>    The same as inproceedings<br><strong>@inbook</strong>      A part of a book, which may be a chapter (or section or whatever) and/or a range of pages<br><strong>@incollection</strong>   A part of a book having its own title<br><strong>@inproceedings</strong>   An article in a conference proceedings<br><strong>@manual</strong> Technical documentation<br><strong>@mastersthesis</strong>   A Master’s thesis<br><strong>@misc</strong>       Use this type when nothing else fits<br><strong>@phdthesis</strong>     A PhD thesis<br><strong>@proceedings</strong>    The proceedings of a conference<br><strong>@techreport</strong>    A report published by a school or other institution, usually numbered within a series<br><strong>@unpublished</strong>   A document having an author and title, but not formally published<br><strong>@collection</strong>    <strong><em>Not a standard entry type.\</em></strong> Use <strong>proceedings</strong> instead.<br><strong>@patent</strong>      <strong><em>Not a standard entry type.\</em></strong></p>
+<ul>
+<li>@ARTICLE{之后的文字就是这个文献的标签id了，这个在一个bib文件中需要是唯一的，因为我们在tex中用<code>\cite{}</code>引用时需要用这个id来引用</li>
+</ul>
+</blockquote>
+<h4 id="2-1-详细步骤"><a href="#2-1-详细步骤" class="headerlink" title="2.1 详细步骤"></a>2.1 详细步骤</h4><h5 id="1、创建ref-bib文件。"><a href="#1、创建ref-bib文件。" class="headerlink" title="1、创建ref.bib文件。"></a>1、创建ref.bib文件。</h5><ul>
+<li><p>将Endnote中的参考文献导出为.bib文件</p>
+<p>1、选中所需参考文献，点击文件菜单下的导出选项，文件名的后缀名为<code>bib</code>，导出格式选为<code>BibTex Export</code></p>
+<img src="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/2.png" class title="导出为bib文件步骤"></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Latex</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-自己动手写调试器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -807,6 +915,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Latex</a>
               </li>
             
             <div class="clearfix"></div>
