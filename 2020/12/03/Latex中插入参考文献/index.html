@@ -8,17 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Latex中插入参考文献 | zhihzi的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在Word中插入参考文献是用了 Endnote插件，在Latex中插入参考文献有直接一条一条的写上去和使用.bib文件这两种方式。 1. 直接写入使用 \bibitem命令去建立参考文献 1234567891011\begin&amp;#123;thebibliography&amp;#125;&amp;#123;&amp;#125;% and use \bibitem to create references. Consult">
+  <meta name="description" content="本文介绍了在Latex中插入参考文献的两种方式。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Latex中插入参考文献">
 <meta property="og:url" content="http://yoursite.com/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/index.html">
 <meta property="og:site_name" content="zhihzi的博客">
-<meta property="og:description" content="在Word中插入参考文献是用了 Endnote插件，在Latex中插入参考文献有直接一条一条的写上去和使用.bib文件这两种方式。 1. 直接写入使用 \bibitem命令去建立参考文献 1234567891011\begin&amp;#123;thebibliography&amp;#125;&amp;#123;&amp;#125;% and use \bibitem to create references. Consult">
+<meta property="og:description" content="本文介绍了在Latex中插入参考文献的两种方式。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/1.png">
 <meta property="og:image" content="http://yoursite.com/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/6.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/5.png">
 <meta property="article:published_time" content="2020-12-03T07:22:17.000Z">
-<meta property="article:modified_time" content="2020-12-03T08:12:35.998Z">
+<meta property="article:modified_time" content="2020-12-03T08:36:15.837Z">
 <meta property="article:author" content="zhizhi">
 <meta property="article:tag" content="Latex">
 <meta name="twitter:card" content="summary">
@@ -186,17 +189,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在Word中插入参考文献是用了 Endnote插件，在Latex中插入参考文献有直接一条一条的写上去和使用.bib文件这两种方式。</p>
+        <p>本文介绍了在Latex中插入参考文献的两种方式。</p>
+<a id="more"></a>
+
 <h3 id="1-直接写入"><a href="#1-直接写入" class="headerlink" title="1. 直接写入"></a>1. 直接写入</h3><p>使用 <code>\bibitem</code>命令去建立参考文献</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">\begin&#123;thebibliography&#125;&#123;&#125;</span><br><span class="line">% and use \bibitem to create references. Consult the Instructions</span><br><span class="line">% for authors for reference list style.</span><br><span class="line">\bibitem&#123;RefJ&#125;</span><br><span class="line">% Format for Journal Reference</span><br><span class="line">Author, Article title, Journal, Volume, page numbers (year)</span><br><span class="line">% Format for books</span><br><span class="line">\bibitem&#123;RefB&#125;</span><br><span class="line">Author, Book title, page numbers. Publisher, place (year)</span><br><span class="line">% etc</span><br><span class="line">\end&#123;thebibliography&#125;</span><br></pre></td></tr></table></figure>
 
-<p>{RefJ}、{RefB}代表每条参考文献唯一的标签，在正文中使用<code>\cite{RefJ}``\cite{RefB}</code>来引用所对应的参考文献。</p>
-<p>该方法比较繁琐，如果参考文献过多的话使用起来比较复杂也容易出错，所以我们下面使用.bib文件来插入参考文献。</p>
+<p>{RefJ}、{RefB}代表每条参考文献唯一的标签，在正文中使用<code>\cite{RefJ}``\cite{RefB}</code>来引用所对应的参考文献。<br>该方法比较繁琐，如果参考文献过多的话使用起来比较复杂也容易出错，所以我们下面使用.bib文件来插入参考文献。</p>
 <h3 id="2-使用-bib文件"><a href="#2-使用-bib文件" class="headerlink" title="2. 使用.bib文件"></a>2. 使用.bib文件</h3><blockquote>
 <p>在使用此类方法时会用到两种文件</p>
 <ul>
 <li>.bib文件：你的参考文献数据文件</li>
-<li>bst文件：一般由期刊或者杂志提供, bst设定了参考文献出现在文末出现的格式，例如设置排序方式，设置作者名按缩写的方式还是不缩写等等。</li>
+<li>.bst文件：一般由期刊或者杂志提供, bst设定了参考文献出现在文末出现的格式，例如设置排序方式，设置作者名按缩写的方式还是不缩写等等。</li>
 </ul>
 </blockquote>
 <p>.bib文件的样子类似json文件，由标签和键值组成。</p>
@@ -213,9 +217,29 @@
 </blockquote>
 <h4 id="2-1-详细步骤"><a href="#2-1-详细步骤" class="headerlink" title="2.1 详细步骤"></a>2.1 详细步骤</h4><h5 id="1、创建ref-bib文件。"><a href="#1、创建ref-bib文件。" class="headerlink" title="1、创建ref.bib文件。"></a>1、创建ref.bib文件。</h5><ul>
 <li><p>将Endnote中的参考文献导出为.bib文件</p>
-<p>1、选中所需参考文献，点击文件菜单下的导出选项，文件名的后缀名为<code>bib</code>，导出格式选为<code>BibTex Export</code></p>
-<img src="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/2.png" class title="导出为bib文件步骤"></li>
+<p>1、选中所需参考文献，选择文件—&gt;导出，导出的文件名的后缀名为<code>bib</code>，导出格式选为<code>BibTex Export</code></p>
+<img src="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/2.png" class title="导出为bib文件步骤">
+
+</li>
 </ul>
+<h5 id="2、在原文档中引用文献"><a href="#2、在原文档中引用文献" class="headerlink" title="2、在原文档中引用文献"></a>2、在原文档中引用文献</h5><p>在<code>\documentclass</code>命令后面加上如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\usepackage&#123;hyperref&#125;  %添加引用文献的包</span><br><span class="line">\hypersetup&#123;hidelinks&#125; %消除正文中引用数字上的框框</span><br></pre></td></tr></table></figure>
+
+<p>在<code>\end{document}</code>命令前加上如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\bibliographystyle&#123;spphys&#125;       % APS-like style for physics</span><br><span class="line">\bibliography&#123;RefJ.bib&#125;   % name your BibTeX data base</span><br></pre></td></tr></table></figure>
+
+<p>正文中使用<code>\cite{id}</code>命令来引用所需文件。</p>
+<blockquote>
+<p>未在正文中引用的参考文献最终编译后也不会出现在文档末尾。所以在写论文的时候可以把所有的参考文献都使用BibTex的格式保存在一个.bib文件中，但在引用时只引用所需的参考文献。</p>
+</blockquote>
+<h5 id="3、编译"><a href="#3、编译" class="headerlink" title="3、编译"></a>3、编译</h5><p>首先确认自己选择了编译环境。选择option-&gt;Setting Texstudio -&gt; build</p>
+<img src="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/4.png" class title="编译环境的确认">
+
+<h5 id="4、最终效果展示"><a href="#4、最终效果展示" class="headerlink" title="4、最终效果展示"></a>4、最终效果展示</h5><img src="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/6.png" class title="参考文献显示">
+
+<img src="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/5.png" class title="正文显示">
+
+<p>在生成的pdf文件中点击相应的参考文献标号也能实现顺利的跳转。</p>
 
       
 
@@ -349,7 +373,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-直接写入"><span class="toc-number">1.</span> <span class="toc-text">1. 直接写入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-使用-bib文件"><span class="toc-number">2.</span> <span class="toc-text">2. 使用.bib文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-详细步骤"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 详细步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1、创建ref-bib文件。"><span class="toc-number">2.1.1.</span> <span class="toc-text">1、创建ref.bib文件。</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-直接写入"><span class="toc-number">1.</span> <span class="toc-text">1. 直接写入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-使用-bib文件"><span class="toc-number">2.</span> <span class="toc-text">2. 使用.bib文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-详细步骤"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 详细步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1、创建ref-bib文件。"><span class="toc-number">2.1.1.</span> <span class="toc-text">1、创建ref.bib文件。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2、在原文档中引用文献"><span class="toc-number">2.1.2.</span> <span class="toc-text">2、在原文档中引用文献</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3、编译"><span class="toc-number">2.1.3.</span> <span class="toc-text">3、编译</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4、最终效果展示"><span class="toc-number">2.1.4.</span> <span class="toc-text">4、最终效果展示</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
