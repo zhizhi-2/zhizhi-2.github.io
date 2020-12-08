@@ -16,8 +16,10 @@
 <meta property="og:description" content="PE文件是Windows操作系统下使用的可执行文件格式。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/3.png">
 <meta property="article:published_time" content="2020-11-30T08:45:57.000Z">
-<meta property="article:modified_time" content="2020-12-03T13:08:43.937Z">
+<meta property="article:modified_time" content="2020-12-08T08:13:57.993Z">
 <meta property="article:author" content="zhizhi">
 <meta property="article:tag" content="核心工程，逆行原理">
 <meta name="twitter:card" content="summary">
@@ -87,7 +89,7 @@
 				
 					<a class="github" target="_blank" href="https://github.com/zhizhi-2" title="github"><i class="icon-github"></i></a>
 		        
-					<a class="weibo" target="_blank" href="https://weibo.com/没有昵称zhizhi" title="weibo"><i class="icon-weibo"></i></a>
+					<a class="weibo" target="_blank" href="https://weibo.com/5674732837/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo"><i class="icon-weibo"></i></a>
 		        
 			</div>
 		</nav>
@@ -126,7 +128,7 @@
 					
 						<a class="github" target="_blank" href="https://github.com/zhizhi-2" title="github"><i class="icon-github"></i></a>
 			        
-						<a class="weibo" target="_blank" href="https://weibo.com/没有昵称zhizhi" title="weibo"><i class="icon-weibo"></i></a>
+						<a class="weibo" target="_blank" href="https://weibo.com/5674732837/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo"><i class="icon-weibo"></i></a>
 			        
 				</div>
 			</nav>
@@ -185,7 +187,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">114字</span>
+        <span class="post-count">834字</span>
       </span>
     </span>
 
@@ -194,7 +196,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1分</span>
+        <span class="post-count">3分</span>
       </span>
     </span>
 </div>
@@ -211,6 +213,58 @@
 
 <p>PE文件格式总览：PE文件使用的是一个平面地址空间,所有代码和数据都被合并在一起,组成一个很大的结构。文件的内容被分割为不同的区块(Section,又名区段,节等),区块中包含代码或数据,各个区块按页边界来对齐,区块没有大小限制。</p>
 <img src="/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/1.png" class title="PE文件结构划分">
+
+<table>
+<thead>
+<tr>
+<th align="center"><strong>名称</strong></th>
+<th align="left"><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">地址</td>
+<td align="left">是“虚拟地址”而不是“物理地址”。为什么不是“物理地址”呢？因为数据在内存的位置经常在变，这样可以节省内存开支、避开错误的内存位置等的优势。同时用户并不需要知道具体的“真实地址”，因为系统自己会为程序准备好内存空间的（只要内存足够大）</td>
+</tr>
+<tr>
+<td align="center">镜像文 件</td>
+<td align="left">包含以EXE文件为代表的“可执行文件”、以DLL文件为代表的“动态链接库”。为什么用“镜像”？这是因为他们常常被直接“复制”到内存，有“镜像”的某种意思。</td>
+</tr>
+<tr>
+<td align="center">RVA</td>
+<td align="left">英文全称Relatively Virtual Address。偏移（又称“相对虚拟地址”）。相对镜像基址的偏移。（有时候不一定是相对镜像的基址，还可能以某个结构的首地址为基址）</td>
+</tr>
+<tr>
+<td align="center">节</td>
+<td align="left">节是PE文件中代码或数据的基本单元。原则上讲，节只分为“代码节”和“数据节”。（文件中节大小通常以磁盘的一个物理扇区也就是512B对齐，若是镜像文件加载到内存中，以一个内存页大小对齐，32位为4K，64位为8K）</td>
+</tr>
+<tr>
+<td align="center">VA</td>
+<td align="left">英文全称Virtual Address。虚拟地址（虚拟内存中的正常地址，不需要进行转换）</td>
+</tr>
+</tbody></table>
+<h3 id="1-PE头"><a href="#1-PE头" class="headerlink" title="1. PE头"></a>1. PE头</h3><h4 id="1-1-DOS头"><a href="#1-1-DOS头" class="headerlink" title="1.1 DOS头"></a>1.1 DOS头</h4><blockquote>
+<p>每个PE文件都以一个小的MS-DOS可执行体开头。在Windows早期很多消费者并没有安装Windows，所以就需要存在这个MS-DOS可执行体。当在没有安装Windows的机器上执行时，这段程序至少能打印一条信息来说明必须在Windows上才能执行这个可执行文件。</p>
+</blockquote>
+<p><strong>IMAGE_DOS_HEADER</strong></p>
+<img src="/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/2.png" class title="IMAGE_DOS_HEADER结构体">
+
+<p>该结构体中的两个重要成员：  </p>
+<ul>
+<li>e_magic：DOS签名（signature，4D5A=&gt;ASCLL值“MZ”）</li>
+<li>e_lfanew：指示NT头的偏移（根据不同文件拥有可变值）</li>
+</ul>
+<h4 id="1-2-DOS存根"><a href="#1-2-DOS存根" class="headerlink" title="1.2 DOS存根"></a>1.2 DOS存根</h4><blockquote>
+<p>DOS存根（stub）在DOS头的下方，是个可选项，且大小不固定（即使没有DOS存根，文件也能正常运行），DOS存根由代码与数据混合而成。</p>
+</blockquote>
+<h4 id="1-3-NT头"><a href="#1-3-NT头" class="headerlink" title="1.3 NT头"></a>1.3 NT头</h4><blockquote>
+<p><strong>IMAGE_NT_HEADERS</strong> 结构是存储 PE 文件细节信息的主要位置。它的偏移由这个文件开头的 IMAGE_DOS_HEADER 的 e_lfanew 域给出。实际上有两个版本的IMAGE_NT_HEADER 结构，一个用于 32 位可执行文件，另一个用于 64 位版本。它们之间的区别很小，在讨论中我将认为它们是相同的。区别这两种格式的唯一正确的、由Microsoft 认可的方法是通过 IMAGE_OPTIONAL_HEADER 结构（马上就会讲到）的 Magic 域的值。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//IMAGE_NT_HEADER由三个字段组成：</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_NT_HEADERS</span> &#123;</span></span><br><span class="line">DWORD Signature;      <span class="comment">//签名，其值为50450000h(&quot;PE&quot;00)</span></span><br><span class="line">IMAGE_FILE_HEADER FileHeader;   <span class="comment">//文件头</span></span><br><span class="line">IMAGE_OPTIONAL_HEADER32 OptionalHeader;   <span class="comment">//可选头</span></span><br><span class="line">&#125; IMAGE_NT_HEADERS32, *PIMAGE_NT_HEADERS32; </span><br></pre></td></tr></table></figure>
+
+<h5 id="1-3-1-IMAGE-FILE-HEADER"><a href="#1-3-1-IMAGE-FILE-HEADER" class="headerlink" title="1.3.1 IMAGE_FILE_HEADER"></a>1.3.1 IMAGE_FILE_HEADER</h5><p>IMAGE_FILE_HEADER 结构体中的重要成员</p>
+<img src="/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/3.png" class title="重要成员">
+
+<h4 id="1-4-节区头"><a href="#1-4-节区头" class="headerlink" title="1.4 节区头"></a>1.4 节区头</h4>
       
 
       
@@ -357,7 +411,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-PE%E5%A4%B4"><span class="toc-number">1.</span> <span class="toc-text">1. PE头</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-DOS%E5%A4%B4"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 DOS头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-DOS%E5%AD%98%E6%A0%B9"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 DOS存根</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-NT%E5%A4%B4"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 NT头</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-1-IMAGE-FILE-HEADER"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.3.1 IMAGE_FILE_HEADER</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-%E8%8A%82%E5%8C%BA%E5%A4%B4"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 节区头</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
