@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/7.png">
 <meta property="og:image" content="http://yoursite.com/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/8.png">
 <meta property="article:published_time" content="2020-11-30T08:45:57.000Z">
-<meta property="article:modified_time" content="2020-12-09T12:55:24.745Z">
+<meta property="article:modified_time" content="2020-12-20T13:23:02.626Z">
 <meta property="article:author" content="zhizhi">
 <meta property="article:tag" content="核心工程，逆行原理">
 <meta name="twitter:card" content="summary">
@@ -76,7 +76,7 @@
 			</ul>
 		</nav>
 		<nav>
-            总文章数 9
+            总文章数 10
         </nav>
 		<nav class="header-smart-menu">
     		
@@ -192,7 +192,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">2.6k字</span>
+        <span class="post-count">2.7k字</span>
       </span>
     </span>
 
@@ -336,11 +336,13 @@
 </blockquote>
 <p>加载DLL的方式有两种：<br>（1）“显示链接”（Explicit Linking）：程序使用DLL时加载，使用完毕后释放内存。<br>（2）“隐式加载”（Implicit Linking）：程序开始时即一同加载DLL，程序终止时再释放占用的内存<br>IAT提供的机制与隐式链接有关。</p>
 <h4 id="4-2-IMAGE-IMPORT-DESCRIPTOR"><a href="#4-2-IMAGE-IMPORT-DESCRIPTOR" class="headerlink" title="4.2 IMAGE_IMPORT_DESCRIPTOR"></a>4.2 IMAGE_IMPORT_DESCRIPTOR</h4><blockquote>
-<p>IMAGE_IMPORT_DESCRIPTOR结构体中记录着PE文件要导入哪些库文件。</p>
+<p>IMAGE_IMPORT_DESCRIPTOR结构体中记录着PE文件要导入哪些库文件。<br>执行一个普通程序时往往要导入多个库，，导入多少库就存在多少个IMAGE_IMPORT_DESCRIPTOR，这些结构体形成了数组，且结构体数组最后以NULL结构体结束。</p>
 </blockquote>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// IMAGE_IMPORT_DESCRIPTOR结构体</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_IMPORT_DESCRIPTOR</span>&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">union</span>&#123;</span></span><br><span class="line">        DWORD Characteristics;    </span><br><span class="line">        DWORD OriginalFirstThunk;    <span class="comment">//INT的地址（RVA）</span></span><br><span class="line">    &#125;;</span><br><span class="line">    DWORD TimeDateStamp;</span><br><span class="line">    DWORD ForwarderChain;</span><br><span class="line">    DWORD Name;        <span class="comment">//库名称字符串的地址（RVA）</span></span><br><span class="line">    DWORD FirstThunk;  <span class="comment">//IAT的地址（RVA）</span></span><br><span class="line">&#125;IMAGE_IMPORT_DESCRIPTOR;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_IMPORT_BY_NAME</span>&#123;</span></span><br><span class="line">    WORD Hint;</span><br><span class="line">    BYTE Name[<span class="number">1</span>];</span><br><span class="line">&#125;IMAGE_IMPORT_BY_NAME,*PIMAGE_IMPOER_BY_NAME;</span><br></pre></td></tr></table></figure>
 
 <img src="/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/8.png" class>
+
+
 
 <h3 id="5-EAT"><a href="#5-EAT" class="headerlink" title="5. EAT"></a>5. EAT</h3><blockquote>
 <p>Windows操作系统中，“库”是为了方便其他程序调用而集中包含相关函数的文件（DLL/SYS）。Win32 API是最具代表性的库，其中的kernel32.dll文件被称为最核心的库文件。<br>EAT是一种核心机制，它使不同应用程序可以调用库文件中提供的函数。也就是说，只有通过EAT才能准确求得从相应库中导出函数的起始地址。</p>
@@ -523,7 +525,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 zhizhi
+    		&copy; 2021 zhizhi
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -619,6 +621,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Latex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">前端开发</a>
               </li>
             
             <div class="clearfix"></div>

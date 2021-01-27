@@ -15,11 +15,13 @@
 <meta property="og:site_name" content="zhihzi的博客">
 <meta property="og:description" content="DLL注入是（DLL Injection）是渗透其他进程的最简单有效的方法，借助DLL注入，可以勾取API、改进程序、修复Bug。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/12/19/DLL%E6%B3%A8%E5%85%A5/1.png">
 <meta property="article:published_time" content="2020-12-19T11:56:05.000Z">
-<meta property="article:modified_time" content="2020-12-19T12:43:12.059Z">
+<meta property="article:modified_time" content="2020-12-20T12:07:19.130Z">
 <meta property="article:author" content="zhizhi">
 <meta property="article:tag" content="核心工程，逆向原理">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/12/19/DLL%E6%B3%A8%E5%85%A5/1.png">
   
     <link rel="alternative" href="/atom.xml" title="zhihzi的博客" type="application/atom+xml">
   
@@ -67,7 +69,7 @@
 			</ul>
 		</nav>
 		<nav>
-            总文章数 9
+            总文章数 10
         </nav>
 		<nav class="header-smart-menu">
     		
@@ -183,7 +185,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">217字</span>
+        <span class="post-count">441字</span>
       </span>
     </span>
 
@@ -210,7 +212,17 @@
 <p>DLL(Dynamic Linked Library)动态链接库<br>DLL被加载到进程后会自动运行DllMain()函数，用户可以把想执行的代码放到DllMain()函数，每当加载DLL时，添加的代码就会自然而然地得到执行。</p>
 </blockquote>
 <p>DLL注入方法：（1）创建远程线程（CreateRemoteThread() API）<br>                          （2）使用注册表（AppInit_DLLs值）<br>                          （3）消息勾取（SetWindowsHookEx() API）</p>
-<h3 id="1-CreateRemoteThread"><a href="#1-CreateRemoteThread" class="headerlink" title="1. CreateRemoteThread()"></a>1. CreateRemoteThread()</h3>
+<h3 id="1-CreateRemoteThread"><a href="#1-CreateRemoteThread" class="headerlink" title="1. CreateRemoteThread()"></a>1. CreateRemoteThread()</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CreateRemoteThread()</span><br><span class="line"><span class="function">HANDLE WINAPI <span class="title">CreateRemoteThread</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">__in HANDLE                   hProcess,        <span class="comment">//目标进程句柄</span></span></span></span><br><span class="line"><span class="function"><span class="params">__in LPSECURITY_ATTRIBUTES    lpThreadAttributes,</span></span></span><br><span class="line"><span class="function"><span class="params">__in SIZE_T                   dwStackSize,</span></span></span><br><span class="line"><span class="function"><span class="params">__in LPTHREAD_START_ROUTINE   lpStartAddress,   <span class="comment">//线程函数地址</span></span></span></span><br><span class="line"><span class="function"><span class="params">__in LPVOID                   lpParameter,      <span class="comment">//线程参数地址</span></span></span></span><br><span class="line"><span class="function"><span class="params">__in DWORD                    dwCreationFlags,</span></span></span><br><span class="line"><span class="function"><span class="params">__out LPDWORD                 lpThread</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>CreateRemoteThread()函数最主要的功能就是驱使目标进程调用LoadLibrary()函数，进而加载指定的DLL文件。</p>
+<h3 id="2-AppIntit-DLLs"><a href="#2-AppIntit-DLLs" class="headerlink" title="2. AppIntit_DLLs"></a>2. AppIntit_DLLs</h3><p>Windows操作系统注册表中默认提供了AppInit_DLLs与LoadAppInit_DLLs两个注册表。如下图所示。</p>
+<img src="/2020/12/19/DLL%E6%B3%A8%E5%85%A5/1.png" class>
+
+<p><strong>步骤：</strong>在注册表编辑器中，将要注入的DLL的路径字符串写入AppInit_DLLs项目，然后将LoadAppinit_DLLs的项目值设为1.。重启后指定DLL会注入所有运行进程。</p>
+<blockquote>
+<p>上述方法的工作原理是，User32.dll被加载到进程时，会读取AppInit_DLLs注册表项，若有值，则调用LoadLibrary()API加载用户DLL。所以，严格的说，相应DLL并不会被加载到所有进程，而只是加载至加载user32.dll的进程。</p>
+</blockquote>
+
       
 
       
@@ -319,6 +331,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2021/01/27/css%E6%A0%B7%E5%BC%8F%E4%B9%8B%E5%AD%97%E4%BD%93%E7%9A%84%E5%B1%9E%E6%80%A7/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          css样式常用属性
+        
+      </div>
+    </a>
+  
   
     <a href="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">Latex中插入参考文献</div>
@@ -348,7 +369,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-CreateRemoteThread"><span class="toc-number">1.</span> <span class="toc-text">1. CreateRemoteThread()</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-CreateRemoteThread"><span class="toc-number">1.</span> <span class="toc-text">1. CreateRemoteThread()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-AppIntit-DLLs"><span class="toc-number">2.</span> <span class="toc-text">2. AppIntit_DLLs</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -377,7 +398,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 zhizhi
+    		&copy; 2021 zhizhi
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -473,6 +494,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Latex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">前端开发</a>
               </li>
             
             <div class="clearfix"></div>
