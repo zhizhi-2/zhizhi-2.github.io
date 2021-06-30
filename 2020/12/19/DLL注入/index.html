@@ -17,7 +17,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/12/19/DLL%E6%B3%A8%E5%85%A5/1.png">
 <meta property="article:published_time" content="2020-12-19T11:56:05.000Z">
-<meta property="article:modified_time" content="2020-12-20T12:07:19.130Z">
+<meta property="article:modified_time" content="2021-06-30T00:38:17.748Z">
 <meta property="article:author" content="zhizhi">
 <meta property="article:tag" content="核心工程，逆向原理">
 <meta name="twitter:card" content="summary">
@@ -189,7 +189,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">441字</span>
+        <span class="post-count">558字</span>
       </span>
     </span>
 
@@ -198,7 +198,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1分</span>
+        <span class="post-count">2分</span>
       </span>
     </span>
 </div>
@@ -216,9 +216,11 @@
 <p>DLL(Dynamic Linked Library)动态链接库<br>DLL被加载到进程后会自动运行DllMain()函数，用户可以把想执行的代码放到DllMain()函数，每当加载DLL时，添加的代码就会自然而然地得到执行。</p>
 </blockquote>
 <p>DLL注入方法：（1）创建远程线程（CreateRemoteThread() API）<br>                          （2）使用注册表（AppInit_DLLs值）<br>                          （3）消息勾取（SetWindowsHookEx() API）</p>
-<h3 id="1-CreateRemoteThread"><a href="#1-CreateRemoteThread" class="headerlink" title="1. CreateRemoteThread()"></a>1. CreateRemoteThread()</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CreateRemoteThread()</span><br><span class="line"><span class="function">HANDLE WINAPI <span class="title">CreateRemoteThread</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">__in HANDLE                   hProcess,        <span class="comment">//目标进程句柄</span></span></span></span><br><span class="line"><span class="function"><span class="params">__in LPSECURITY_ATTRIBUTES    lpThreadAttributes,</span></span></span><br><span class="line"><span class="function"><span class="params">__in SIZE_T                   dwStackSize,</span></span></span><br><span class="line"><span class="function"><span class="params">__in LPTHREAD_START_ROUTINE   lpStartAddress,   <span class="comment">//线程函数地址</span></span></span></span><br><span class="line"><span class="function"><span class="params">__in LPVOID                   lpParameter,      <span class="comment">//线程参数地址</span></span></span></span><br><span class="line"><span class="function"><span class="params">__in DWORD                    dwCreationFlags,</span></span></span><br><span class="line"><span class="function"><span class="params">__out LPDWORD                 lpThread</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="1-CreateRemoteThread"><a href="#1-CreateRemoteThread" class="headerlink" title="1. CreateRemoteThread()"></a>1. CreateRemoteThread()</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CreateRemoteThread()</span><br><span class="line"><span class="function">HANDLE WINAPI <span class="title">CreateRemoteThread</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">__in HANDLE                   hProcess,        <span class="comment">//目标进程句柄</span></span></span></span><br><span class="line"><span class="function"><span class="params">__in LPSECURITY_ATTRIBUTES    lpThreadAttributes,</span></span></span><br><span class="line"><span class="function"><span class="params">__in SIZE_T                   dwStackSize,</span></span></span><br><span class="line"><span class="function"><span class="params">__in LPTHREAD_START_ROUTINE   lpStartAddress,   <span class="comment">//线程函数地址 </span></span></span></span><br><span class="line"><span class="function"><span class="params">__in LPVOID                   lpParameter,      <span class="comment">//线程参数地址 </span></span></span></span><br><span class="line"><span class="function"><span class="params">__in DWORD                    dwCreationFlags,</span></span></span><br><span class="line"><span class="function"><span class="params">__out LPDWORD                 lpThread</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <p>CreateRemoteThread()函数最主要的功能就是驱使目标进程调用LoadLibrary()函数，进而加载指定的DLL文件。</p>
+<p>实际操作就是使用CreateRemoteThread()，lpStartAddress指向LoadLibraryA的地址，lpParameter指向DLL路径。当CreateRemoteThread()执行成功，就向目标进程调用LoadLibraryA加载我们的DLL</p>
+<p>步骤：1、在目标进程内申请足够的空间，用于存储DLL路径。<br>             2、将DLL路径写入申请好的地址<br>             3、解析LoadLibraryA的内存地址<br>             4、将目标进程句柄和LoadLibraryA地址还有存储DLL路径的内存地址，传入CreateRemoteThread()</p>
 <h3 id="2-AppIntit-DLLs"><a href="#2-AppIntit-DLLs" class="headerlink" title="2. AppIntit_DLLs"></a>2. AppIntit_DLLs</h3><p>Windows操作系统注册表中默认提供了AppInit_DLLs与LoadAppInit_DLLs两个注册表。如下图所示。</p>
 <img src="/2020/12/19/DLL%E6%B3%A8%E5%85%A5/1.png" class>
 
@@ -226,7 +228,7 @@
 <blockquote>
 <p>上述方法的工作原理是，User32.dll被加载到进程时，会读取AppInit_DLLs注册表项，若有值，则调用LoadLibrary()API加载用户DLL。所以，严格的说，相应DLL并不会被加载到所有进程，而只是加载至加载user32.dll的进程。</p>
 </blockquote>
-
+<h3 id="3-修改PE文件"><a href="#3-修改PE文件" class="headerlink" title="3.修改PE文件"></a>3.修改PE文件</h3>
       
 
       
@@ -373,7 +375,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-CreateRemoteThread"><span class="toc-number">1.</span> <span class="toc-text">1. CreateRemoteThread()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-AppIntit-DLLs"><span class="toc-number">2.</span> <span class="toc-text">2. AppIntit_DLLs</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-CreateRemoteThread"><span class="toc-number">1.</span> <span class="toc-text">1. CreateRemoteThread()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-AppIntit-DLLs"><span class="toc-number">2.</span> <span class="toc-text">2. AppIntit_DLLs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BF%AE%E6%94%B9PE%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">3.修改PE文件</span></a></li></ol>
                     </div>
                 </span>
             </div>

@@ -22,9 +22,10 @@
 <meta property="og:image" content="http://yoursite.com/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/5.png">
 <meta property="og:image" content="http://yoursite.com/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/6.png">
 <meta property="og:image" content="http://yoursite.com/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/7.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/9.png">
 <meta property="og:image" content="http://yoursite.com/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/8.png">
 <meta property="article:published_time" content="2020-11-30T08:45:57.000Z">
-<meta property="article:modified_time" content="2021-02-21T05:56:18.957Z">
+<meta property="article:modified_time" content="2021-06-30T00:41:48.250Z">
 <meta property="article:author" content="zhizhi">
 <meta property="article:tag" content="核心工程，逆行原理">
 <meta name="twitter:card" content="summary">
@@ -205,7 +206,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">10分</span>
+        <span class="post-count">11分</span>
       </span>
     </span>
 </div>
@@ -314,7 +315,7 @@
 <li>另外，使用区块名字只是人们为 了认识和编程的方便，而对操作系统来说这些是无关紧要的。微软给这些区块取了个有特色的名字，但这不是必须的。当编程从PE 文件中读取需要的内容时，如输入表、输出表，不能以区块名字作为参考，正确的方法是按照数据目录表中的字段来进行定位。</li>
 </ul>
 <h4 id="2-1-区块的对齐值"><a href="#2-1-区块的对齐值" class="headerlink" title="2.1 区块的对齐值"></a>2.1 区块的对齐值</h4><ul>
-<li>之前我们简单了解过区块是要对齐的，无论是在内存中存放还是在磁盘中存放~但他们一般的对齐值是不同的。</li>
+<li>之前我们简单了解过区块是要对齐的，无论是在内存中存放还是在磁盘中存放，但他们一般的对齐值是不同的。</li>
 <li>PE 文件头里边的<strong>FileAligment</strong> 定义了磁盘区块的对齐值。==每一个区块从对齐值的倍数的偏移位置开始存放==。而区块的实际代码或数据的大小不一定刚好是这么多，所以在==多余的地方一般以00h 来填充，==这就是区块间的间隙。</li>
 <li>例如，在PE文件中，一个典型的对齐值是200h ，这样，每个区块都将从200h 的倍数的文件偏移位置开始，假设第一个区块在400h 处，长度为90h，那么从文件400h 到490h 为这一区块的内容，而由于文件的对齐值是200h，所以为了使这一区块的长度为FileAlignment 的整数倍，490h 到 600h 这一个区间都会被00h 填充，这段空间称为区块间隙，下一个区块的开始地址为600h 。</li>
 <li>PE 文件头里边的SectionAligment 定义了内存中区块的对齐值。PE 文件被映射到内存中时，区块总是至少从一个页边界开始。</li>
@@ -332,22 +333,25 @@
 </ul>
 </blockquote>
 <p>PE文件加载到内存时，每个节区都要能准确完成内存地址与文件偏移间的映射。这种映射一般称为RVA        to RAW。方法如下：<br>（1）查找RVA所在节区<br>（2）使用简单的公式计算文件偏移（RAW）<br>根据IMAGE_SECTION_HEADER结构体，换算公式如下：<br>$$<br>RAW - PointerToRawData = RVA - VirtualAdderss<br>$$</p>
-<h3 id="4-IAT（导入地址表）"><a href="#4-IAT（导入地址表）" class="headerlink" title="4. IAT（导入地址表）"></a>4. IAT（导入地址表）</h3><blockquote>
-<p>IAT是一种表格，用来记录程序正在使用哪些库中的哪些函数。</p>
+<h3 id="4-IAT（导入地址表）"><a href="#4-IAT（导入地址表）" class="headerlink" title="4. IAT（导入地址表）"></a>4. IAT（导入地址表）</h3><img src="/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/9.png" class>
+
+<blockquote>
+<p>IAT(Import Address Table)是一种表格，用来记录程序正在使用哪些库中的哪些函数。</p>
 </blockquote>
 <h4 id="4-1-DLL（动态链接库）"><a href="#4-1-DLL（动态链接库）" class="headerlink" title="4.1 DLL（动态链接库）"></a>4.1 DLL（动态链接库）</h4><blockquote>
 <p>不要把库包含到程序中，单独组成DLL文件，需要时调用即可。<br>内存映射技术使加载后的DLL代码、资源在多个进程中实现共享。<br>更新库时只要替换相关DLL文件即可，简便易行。</p>
 </blockquote>
 <p>加载DLL的方式有两种：<br>（1）“显示链接”（Explicit Linking）：程序使用DLL时加载，使用完毕后释放内存。<br>（2）“隐式加载”（Implicit Linking）：程序开始时即一同加载DLL，程序终止时再释放占用的内存<br>IAT提供的机制与隐式链接有关。</p>
-<h4 id="4-2-IMAGE-IMPORT-DESCRIPTOR"><a href="#4-2-IMAGE-IMPORT-DESCRIPTOR" class="headerlink" title="4.2 IMAGE_IMPORT_DESCRIPTOR"></a>4.2 IMAGE_IMPORT_DESCRIPTOR</h4><blockquote>
-<p>IMAGE_IMPORT_DESCRIPTOR结构体中记录着PE文件要导入哪些库文件。<br>执行一个普通程序时往往要导入多个库，，导入多少库就存在多少个IMAGE_IMPORT_DESCRIPTOR，这些结构体形成了数组，且结构体数组最后以NULL结构体结束。</p>
+<h4 id="4-2IMAGE-IMPORT-DESCRIPTOR"><a href="#4-2IMAGE-IMPORT-DESCRIPTOR" class="headerlink" title="4.2IMAGE_IMPORT_DESCRIPTOR"></a>4.2IMAGE_IMPORT_DESCRIPTOR</h4><blockquote>
+<p>IMAGE_IMPORT_DESCRIPTOR结构体中记录着PE文件要导入哪些库文件。<br>执行一个普通程序时往往要导入多个库，导入多少库就存在多少个IMAGE_IMPORT_DESCRIPTOR，这些结构体形成了数组，且结构体数组最后以NULL结构体结束。</p>
 </blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// IMAGE_IMPORT_DESCRIPTOR结构体</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_IMPORT_DESCRIPTOR</span>&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">union</span>&#123;</span></span><br><span class="line">        DWORD Characteristics;    </span><br><span class="line">        DWORD OriginalFirstThunk;    <span class="comment">//INT的地址（RVA）</span></span><br><span class="line">    &#125;;</span><br><span class="line">    DWORD TimeDateStamp;</span><br><span class="line">    DWORD ForwarderChain;</span><br><span class="line">    DWORD Name;        <span class="comment">//库名称字符串的地址（RVA）</span></span><br><span class="line">    DWORD FirstThunk;  <span class="comment">//IAT的地址（RVA）</span></span><br><span class="line">&#125;IMAGE_IMPORT_DESCRIPTOR;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_IMPORT_BY_NAME</span>&#123;</span></span><br><span class="line">    WORD Hint;</span><br><span class="line">    BYTE Name[<span class="number">1</span>];</span><br><span class="line">&#125;IMAGE_IMPORT_BY_NAME,*PIMAGE_IMPOER_BY_NAME;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// IMAGE_IMPORT_DESCRIPTOR结构体</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_IMPORT_DESCRIPTOR</span>&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">union</span>&#123;</span></span><br><span class="line">        DWORD Characteristics;    </span><br><span class="line">        DWORD OriginalFirstThunk;    <span class="comment">//INT(Import Name Table)的地址（RVA）</span></span><br><span class="line">    &#125;;</span><br><span class="line">    DWORD TimeDateStamp;</span><br><span class="line">    DWORD ForwarderChain;</span><br><span class="line">    DWORD Name;        <span class="comment">//库名称字符串的地址（RVA）</span></span><br><span class="line">    DWORD FirstThunk;  <span class="comment">//IAT的地址（RVA）</span></span><br><span class="line">&#125;IMAGE_IMPORT_DESCRIPTOR;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_IMPORT_BY_NAME</span>&#123;</span></span><br><span class="line">    WORD Hint;</span><br><span class="line">    BYTE Name[<span class="number">1</span>];</span><br><span class="line">&#125;IMAGE_IMPORT_BY_NAME,*PIMAGE_IMPOER_BY_NAME;</span><br></pre></td></tr></table></figure>
 
 <img src="/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/8.png" class>
 
-
-
+<blockquote>
+<p>INT是一个包含导入函数信息（Ordinal,Name）的结构体指针数组。只有 获得了这些信息才能在加载到进程内存的库中准确求得相应函数的起始地址。</p>
+</blockquote>
 <h3 id="5-EAT（导出表）"><a href="#5-EAT（导出表）" class="headerlink" title="5. EAT（导出表）"></a>5. EAT（导出表）</h3><blockquote>
 <p>Windows操作系统中，“库”是为了方便其他程序调用而集中包含相关函数的文件（DLL/SYS）。Win32 API是最具代表性的库，其中的kernel32.dll文件被称为最核心的库文件。<br>EAT是一种核心机制，它使不同应用程序可以调用库文件中提供的函数。也就是说，只有通过EAT才能准确求得从相应库中导出函数的起始地址。</p>
 <p>与IAT一样，PE文件内的特定结构体（<strong>IMAGE_EXPORT_DIRECTORY</strong>）保存着导出信息，且PE文件中<strong>仅有一个</strong>用来说明库EAT的IMAGE_EXPORT_DIRECTORY结构体。</p>
@@ -502,7 +506,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-PE%E5%A4%B4"><span class="toc-number">1.</span> <span class="toc-text">1. PE头</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-DOS%E5%A4%B4"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 DOS头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-DOS%E5%AD%98%E6%A0%B9"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 DOS存根</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-NT%E5%A4%B4"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 NT头</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-1-IMAGE-FILE-HEADER-%EF%BC%88%E6%96%87%E4%BB%B6%E5%A4%B4%EF%BC%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.3.1 IMAGE_FILE_HEADER （文件头）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-2-IMAGE-OPTIONAL-HEADER32%EF%BC%88%E5%8F%AF%E9%80%89%E5%A4%B4%EF%BC%89"><span class="toc-number">1.3.2.</span> <span class="toc-text">1.3.2 IMAGE_OPTIONAL_HEADER32（可选头）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-%E8%8A%82%E5%8C%BA%E5%A4%B4"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 节区头</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8C%BA%E5%9D%97%EF%BC%88PE%E4%BD%93%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">2. 区块（PE体）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E5%8C%BA%E5%9D%97%E7%9A%84%E5%AF%B9%E9%BD%90%E5%80%BC"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 区块的对齐值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-RVA-to-RAW"><span class="toc-number">3.</span> <span class="toc-text">3. RVA to RAW</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-IAT%EF%BC%88%E5%AF%BC%E5%85%A5%E5%9C%B0%E5%9D%80%E8%A1%A8%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">4. IAT（导入地址表）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-DLL%EF%BC%88%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 DLL（动态链接库）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-IMAGE-IMPORT-DESCRIPTOR"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 IMAGE_IMPORT_DESCRIPTOR</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-EAT%EF%BC%88%E5%AF%BC%E5%87%BA%E8%A1%A8%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">5. EAT（导出表）</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-PE%E5%A4%B4"><span class="toc-number">1.</span> <span class="toc-text">1. PE头</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-DOS%E5%A4%B4"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 DOS头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-DOS%E5%AD%98%E6%A0%B9"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 DOS存根</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-NT%E5%A4%B4"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 NT头</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-1-IMAGE-FILE-HEADER-%EF%BC%88%E6%96%87%E4%BB%B6%E5%A4%B4%EF%BC%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.3.1 IMAGE_FILE_HEADER （文件头）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-2-IMAGE-OPTIONAL-HEADER32%EF%BC%88%E5%8F%AF%E9%80%89%E5%A4%B4%EF%BC%89"><span class="toc-number">1.3.2.</span> <span class="toc-text">1.3.2 IMAGE_OPTIONAL_HEADER32（可选头）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-%E8%8A%82%E5%8C%BA%E5%A4%B4"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 节区头</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8C%BA%E5%9D%97%EF%BC%88PE%E4%BD%93%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">2. 区块（PE体）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E5%8C%BA%E5%9D%97%E7%9A%84%E5%AF%B9%E9%BD%90%E5%80%BC"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 区块的对齐值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-RVA-to-RAW"><span class="toc-number">3.</span> <span class="toc-text">3. RVA to RAW</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-IAT%EF%BC%88%E5%AF%BC%E5%85%A5%E5%9C%B0%E5%9D%80%E8%A1%A8%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">4. IAT（导入地址表）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-DLL%EF%BC%88%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 DLL（动态链接库）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2IMAGE-IMPORT-DESCRIPTOR"><span class="toc-number">4.2.</span> <span class="toc-text">4.2IMAGE_IMPORT_DESCRIPTOR</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-EAT%EF%BC%88%E5%AF%BC%E5%87%BA%E8%A1%A8%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">5. EAT（导出表）</span></a></li></ol>
                     </div>
                 </span>
             </div>
