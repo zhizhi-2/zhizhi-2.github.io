@@ -159,10 +159,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="汇编相关"><a href="#汇编相关" class="headerlink" title="汇编相关"></a>汇编相关</h3><p>寄存器：</p>
-<p>push 操作数       //把一个32位的操作数压入堆栈中，这个操作将使得esp-4。</p>
-<p>pop 操作数</p>
-<p>mul 操作数        //无符号乘法指令，默认操作数与eax相乘</p>
-<p>cmp  </p>
+<p>（1）<strong>push 操作数</strong>       //把一个32位的操作数压入堆栈中，这个操作将使得esp-4。<br>（2）<strong>pop 操作数</strong>        //把栈顶的数据弹出，该操作数通常为寄存器，即把弹出的数据保存到此寄存器       中。<br>（3）<strong>mul 操作数</strong>        //无符号乘法指令，默认操作数与eax相乘<br>（4）<strong>cmp  dest source</strong>    //计算dest-source，但不改变dest的值，只改变ZF标志位的值，结果为0ZF置1。</p>
 
       
 
