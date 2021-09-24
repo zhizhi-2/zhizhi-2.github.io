@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>栈帧 | zhihzi的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="栈帧在程序中用于声明局部变量、调用函数简言之，栈帧就是利用EBP（栈帧指针）寄存器访问栈内局部变量、参数、函数返回地址等的手段。">
+  <meta name="description" content="栈结构在内存中占用一段连续的存储空间，通过esp与ebp这两个栈指针就急促请你来保存当前栈的起始地址与结束地址（又称为栈顶与栈底）。在栈结构中，每4个字节的栈空间保存一个数据，像这样的栈顶到栈底之间的存储空间被称为栈帧。简言之，栈帧就是利用EBP（栈帧指针）寄存器访问栈内局部变量、参数、函数返回地址等的手段。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="栈帧">
 <meta property="og:url" content="http://yoursite.com/2020/11/29/%E6%A0%88%E5%B8%A7/index.html">
 <meta property="og:site_name" content="zhihzi的博客">
-<meta property="og:description" content="栈帧在程序中用于声明局部变量、调用函数简言之，栈帧就是利用EBP（栈帧指针）寄存器访问栈内局部变量、参数、函数返回地址等的手段。">
+<meta property="og:description" content="栈结构在内存中占用一段连续的存储空间，通过esp与ebp这两个栈指针就急促请你来保存当前栈的起始地址与结束地址（又称为栈顶与栈底）。在栈结构中，每4个字节的栈空间保存一个数据，像这样的栈顶到栈底之间的存储空间被称为栈帧。简言之，栈帧就是利用EBP（栈帧指针）寄存器访问栈内局部变量、参数、函数返回地址等的手段。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/11/29/%E6%A0%88%E5%B8%A7/1.png">
 <meta property="og:image" content="http://yoursite.com/2020/11/29/%E6%A0%88%E5%B8%A7/2.png">
 <meta property="og:image" content="http://yoursite.com/2020/11/29/%E6%A0%88%E5%B8%A7/3.png">
 <meta property="article:published_time" content="2020-11-29T12:58:56.000Z">
-<meta property="article:modified_time" content="2020-12-01T06:30:26.337Z">
+<meta property="article:modified_time" content="2021-09-15T01:45:53.285Z">
 <meta property="article:author" content="zhizhi">
-<meta property="article:tag" content="核心工程，逆向原理">
+<meta property="article:tag" content="核心工程，逆向原理栈栈帧在程序中用于声明局部变量、调用函数">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/11/29/%E6%A0%88%E5%B8%A7/1.png">
   
@@ -71,7 +71,7 @@
 			</ul>
 		</nav>
 		<nav>
-            总文章数 14
+            总文章数 17
         </nav>
 		<nav class="header-smart-menu">
     		
@@ -191,7 +191,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.1k字</span>
+        <span class="post-count">1.6k字</span>
       </span>
     </span>
 
@@ -200,7 +200,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">4分</span>
+        <span class="post-count">5分</span>
       </span>
     </span>
 </div>
@@ -210,9 +210,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>栈帧在程序中用于声明局部变量、调用函数<br>简言之，栈帧就是利用<strong>EBP（栈帧指针）寄存器</strong>访问栈内局部变量、参数、函数返回地址等的手段。</p>
-<a id="more"></a>
+        <p>栈结构在内存中占用一段连续的存储空间，通过esp与ebp这两个栈指针就急促请你来保存当前栈的起始地址与结束地址（又称为栈顶与栈底）。在栈结构中，每4个字节的栈空间保存一个数据，像这样的栈顶到栈底之间的存储空间被称为栈帧。简言之，栈帧就是利用<strong>EBP（栈帧指针）寄存器</strong>访问栈内局部变量、参数、函数返回地址等的手段。</p>
+<span id="more"></span>
 
+<p>不同的两次函数调用，所形成的栈帧也不相同。当一个函数进入到另一个函数中时，就会针对调用的函数开辟出其所需的栈空间，形成此函数的栈帧。当这个函数结束调用时，需要清除掉它所使用的栈空间，关闭栈帧，我们把这一过程称为栈平衡。</p>
 <blockquote>
 <p>ESP寄存器承担着栈顶指针的作用，而EBP则负责行使栈帧指针的职能。<br>程序运行中，ESP寄存器的值随时变化，访问栈中函数的局部变量、参数时，若以ESP为基准编写程序会十分困难，并且也很难使CPU引用到准确的地址。<br>所以，调用某函数时，先要==<strong>把用作基准点（函数起始地址）的ESP值保存到EBP</strong>==，并维持在函数内部。这样，无论ESP值如何变化，以EBP的值为基准能够安全访问到相关函数的局部变量、参数、返回地址。</p>
 </blockquote>
@@ -223,10 +224,15 @@
 <p>在函数调用的过程中,有函数的调用者(caller)和被调用的函数(callee).<br>调用者需要知道被调用者函数返回值;<br>被调用者需要知道传入的参数和返回的地址;</p>
 <h4 id="1-函数调用"><a href="#1-函数调用" class="headerlink" title="1. 函数调用"></a>1. 函数调用</h4><p>函数调用分为以下几步:</p>
 <ul>
-<li>参数入栈: 将参数按照调用约定(C 是<strong>从右向左</strong>)依次压入系统栈中;</li>
-<li>返回地址入栈: 将当前代码区调用指令的下一条指令地址压入栈中，供函数返回时继续执行;</li>
-<li>代码跳转: 处理器将代码区跳转到被调用函数的入口处;</li>
-<li>栈帧调整:<br> 1、将调用者的ebp压栈处理，保存指向栈底的ebp的地址（方便函数返回之后的现场恢复），此时esp指向新的栈顶位置； <code>push ebp</code><br> 2、将当前栈帧切换到新栈帧(将esp值装入ebp，更新栈帧底部), 这时ebp指向栈顶，而此时栈顶就是old ebp  <code>mov ebp, esp</code><br> 3、给新栈帧分配空间 <code>sub esp, XXX</code></li>
+<li><p>参数入栈: 将参数按照调用约定(C 是<strong>从右向左</strong>)依次压入系统栈中;</p>
+</li>
+<li><p>函数调用，将返回地址压栈: 将当前代码区调用指令的下一条指令地址压入栈中，供函数返回时继续执行;</p>
+</li>
+<li><p>代码跳转: 处理器将代码区跳转到被调用函数的入口处;</p>
+</li>
+<li><p>栈帧调整:<br> 1、将调用者的ebp压栈处理，保存指向栈底的ebp的地址（方便函数返回之后的现场恢复），此时esp指向新的栈顶位置； <code>push ebp</code><br> 2、将当前栈帧切换到新栈帧(将esp值装入ebp，更新栈帧底部), 这时ebp指向栈顶，而此时栈顶就是old ebp  <code>mov ebp, esp</code><br> 3、给新栈帧分配空间 <code>sub esp, XXX</code></p>
+<p> 此时<strong>ebp+4可以得到返回地址</strong>，<strong>ebp+8将会寻址到第一个参数</strong>。而<strong>ebp-4可寻址到函数内的第一个局部变量</strong>，<strong>ebp-8可寻址到函数内的第二个局部变量</strong>……</p>
+</li>
 </ul>
 <blockquote>
 <ol>
@@ -241,25 +247,30 @@
 </ul>
 </blockquote>
 <p>cdel是主要在c语言中使用的方法，<strong>调用者</strong>负责处理栈。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//cdel示例</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">"stdio.h"</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> add(<span class="number">1</span>+<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//cdel示例</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;stdio.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> add(<span class="number">1</span>+<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <img src="/2020/11/29/%E6%A0%88%E5%B8%A7/2.png" class title="cdecl示例文件">
 <p>如图所示，<strong>调用者直接清理其压入栈的函数参数，这样的方式即是cdecl</strong></p>
 <h5 id="1-2-stdcall"><a href="#1-2-stdcall" class="headerlink" title="1.2 stdcall"></a>1.2 stdcall</h5><blockquote>
 <p>c语言默认的函数调用方式为cdecl，若想使用stdcall方式编译源码，只要使用_stdcall关键字即可。</p>
 </blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//stdcall示例</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">"stdio.h"</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> _stacall <span class="title">add</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> add(<span class="number">1</span>+<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//stdcall示例</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;stdio.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> _stacall <span class="title">add</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> add(<span class="number">1</span>+<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <img src="/2020/11/29/%E6%A0%88%E5%B8%A7/3.png" class title="stacall.exe示例文件">
-<p>栈的清理工作由add()函数中最后（40100A）的 RETN 8 命令来执行。<br>RENT 8命令的含义为RENT+POP 8字节，即返回后使ESP增加到指定大小。<br>像这样在<strong>被调用者函数内部清理栈的方式即为stdcall方式</strong>。</p>
+<p>栈的清理工作由add()函数中最后（40100A）的 RETN 8 命令来执行。<br>RENT 8命令的含义为RENT+POP 8字节，即返回后使ESP增加到指定大小。<br>像这样在<strong>被调用者函数内部清理栈的方式即为stdcall方式</strong>。<br>使用stdcall的主要优点在于，在每次函数调用后，不需要通过代码从栈中清除参数，因而能够生成体积稍小、速度稍快的程序。根据惯例，微软对所有由共享（DLL）文件输出的参数数量固定的函数使用stdcall约定。</p>
+<h5 id="1-3-x86-fastcall约定"><a href="#1-3-x86-fastcall约定" class="headerlink" title="1.3 x86 fastcall约定"></a>1.3 x86 fastcall约定</h5><p>fastcall约定是stdcall约定的一个变体，它向CPU寄存器（而非程序栈）最多传递两个参数，Microsoft Visual C/C++和CNU GCC/g++（3.4及更低版本）编译器能够识别函数声明中的fastcall修饰符。如果指定使用fastcall约定，则传递给函数的前两个参数将分别位于ECX和EDX寄存器中，剩余的其他函数则以类似stdcall约定的方式从右到左放入栈中。同样与stdcall类似，在返回调用方时，fastcall函数负责从栈中删除参数。</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void fastcall demo_fastcall (<span class="keyword">int</span> w,<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> z)<span class="comment">;</span></span><br><span class="line">demo_fastcall(<span class="number">1</span>，<span class="number">2</span>，<span class="number">3</span>，<span class="number">4</span>)</span><br><span class="line"><span class="keyword">push</span> <span class="number">4</span></span><br><span class="line"><span class="keyword">push</span> <span class="number">3</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">edx</span>,<span class="number">2</span></span><br><span class="line"><span class="keyword">mov</span> exc,<span class="number">1</span></span><br><span class="line"><span class="keyword">call</span> demo_fastcall</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
 <h4 id="2-函数返回"><a href="#2-函数返回" class="headerlink" title="2. 函数返回"></a>2. 函数返回</h4><p>函数返回分为以下几步:</p>
 <ul>
-<li>保存被调用函数的返回值到 eax 寄存器中 <code>mov eax, xxx</code></li>
+<li>保存被调用函数的返回值到 <strong>eax 寄存器</strong>中 <code>mov eax, xxx</code></li>
 <li>恢复 esp 同时回收局部变量空间 <code>mov esp, ebp</code></li>
 <li>将上一个栈帧底部位置恢复到 ebp <code>pop ebp</code></li>
 <li>弹出当前栈顶元素,从栈中取到返回地址,并跳转到该位置 <code>ret</code></li>
 </ul>
-<h4 id="Reference："><a href="#Reference：" class="headerlink" title="Reference："></a>Reference：</h4><p><a href="https://www.jianshu.com/p/b666213cdd8a" target="_blank" rel="noopener">https://www.jianshu.com/p/b666213cdd8a</a><br>《核心工程、逆向原理》 </p>
+<h4 id="Reference："><a href="#Reference：" class="headerlink" title="Reference："></a>Reference：</h4><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b666213cdd8a">https://www.jianshu.com/p/b666213cdd8a</a><br>《核心工程、逆向原理》 </p>
 
       
 
@@ -299,7 +310,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">核心工程，逆向原理</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">核心工程，逆向原理栈栈帧在程序中用于声明局部变量、调用函数</a>
         		</li>
       		
 		</ul>
@@ -407,7 +418,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">1. 函数调用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-cdel"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 cdel</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-stdcall"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 stdcall</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E"><span class="toc-number">2.</span> <span class="toc-text">2. 函数返回</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">Reference：</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">1. 函数调用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-cdel"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 cdel</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-stdcall"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 stdcall</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-x86-fastcall%E7%BA%A6%E5%AE%9A"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 x86 fastcall约定</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E"><span class="toc-number">2.</span> <span class="toc-text">2. 函数返回</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">Reference：</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -523,10 +534,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">核心工程，逆行原理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -544,6 +551,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">python灰帽子</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Windows PE权威指南</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">逆向分析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">核心工程，逆向原理栈栈帧在程序中用于声明局部变量、调用函数</a>
               </li>
             
             <div class="clearfix"></div>

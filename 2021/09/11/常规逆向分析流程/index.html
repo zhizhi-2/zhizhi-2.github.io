@@ -6,16 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | zhihzi的博客</title>
+  <title>常规逆向分析流程 | zhihzi的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="菜菜子">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zhihzi的博客">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="在对一个可执行程序（尤其是图形化的程序）进行分析时，其汇编代码常常比较庞大，因此需要定位出真正需要分析的关键代码。在找到关键代码后，需要对关键代码采用的算法进行分析，理清程序功能。 1、关键代码定位1、1 API断点法在获取文本输入时，对于窗口类程序获取文本的方式主要是通过GetWindowText和GetDIgItemText两个API来获取。在输出结果时，程序通常会弹出对话框，调用的API通常">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常规逆向分析流程">
+<meta property="og:url" content="http://yoursite.com/2021/09/11/%E5%B8%B8%E8%A7%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B/index.html">
 <meta property="og:site_name" content="zhihzi的博客">
-<meta property="og:description" content="菜菜子">
+<meta property="og:description" content="在对一个可执行程序（尤其是图形化的程序）进行分析时，其汇编代码常常比较庞大，因此需要定位出真正需要分析的关键代码。在找到关键代码后，需要对关键代码采用的算法进行分析，理清程序功能。 1、关键代码定位1、1 API断点法在获取文本输入时，对于窗口类程序获取文本的方式主要是通过GetWindowText和GetDIgItemText两个API来获取。在输出结果时，程序通常会弹出对话框，调用的API通常">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-11T08:44:16.000Z">
+<meta property="article:modified_time" content="2021-09-12T01:09:09.268Z">
 <meta property="article:author" content="zhizhi">
+<meta property="article:tag" content="逆向分析">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="zhihzi的博客" type="application/atom+xml">
@@ -151,101 +154,100 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-常规逆向分析流程" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/24/Win32%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B/" class="archive-article-date">
-  	<time datetime="2021-09-24T02:40:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-24</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/24/Win32%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B/">Win32汇编编程</a>
+    <h1 class="article-title" itemprop="name">
+      常规逆向分析流程
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+		<!--显示阅读次数-->
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/23/Windows-PE%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2021-09-23T08:10:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/23/Windows-PE%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Windows PE权威指南学习笔记</a>
-    </h1>
-  
+  <br/>
+  <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+  <span class="icon-sort"></span>
+  <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+  </span>
+  </a>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Windows PE权威指南</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<!--显示阅读次数完毕-->
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/11/%E5%B8%B8%E8%A7%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B/" class="archive-article-date">
+        
+        <a href="/2021/09/11/%E5%B8%B8%E8%A7%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B/" class="archive-article-date">
   	<time datetime="2021-09-11T08:44:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-11</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/09/11/%E5%B8%B8%E8%A7%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B/">常规逆向分析流程</a>
-    </h1>
-  
+		 
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">605字</span>
+      </span>
+    </span>
 
-        <div class="article-info info-on-right">
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">2分</span>
+      </span>
+    </span>
+</div>
           
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在对一个可执行程序（尤其是图形化的程序）进行分析时，其汇编代码常常比较庞大，因此需要定位出真正需要分析的关键代码。在找到关键代码后，需要对关键代码采用的算法进行分析，理清程序功能。</p>
+<h3 id="1、关键代码定位"><a href="#1、关键代码定位" class="headerlink" title="1、关键代码定位"></a>1、关键代码定位</h3><h4 id="1、1-API断点法"><a href="#1、1-API断点法" class="headerlink" title="1、1 API断点法"></a>1、1 API断点法</h4><p>在获取文本输入时，对于窗口类程序获取文本的方式主要是通过<strong>GetWindowText</strong>和<strong>GetDIgItemText</strong>两个API来获取。在输出结果时，程序通常会弹出对话框，调用的API通常为<strong>MessageBox</strong>。在这些API中下断点，在调试器中断下来之后，通过栈回溯即可定位到关键代码。</p>
+<h4 id="1、2-字符串检索法"><a href="#1、2-字符串检索法" class="headerlink" title="1、2 字符串检索法"></a>1、2 字符串检索法</h4><h5 id="（1）在IDA中查找字符串"><a href="#（1）在IDA中查找字符串" class="headerlink" title="（1）在IDA中查找字符串"></a>（1）在IDA中查找字符串</h5><p>打开Strings子窗口，通过Ctrl+F快捷键输入你想要查找的字符串。</p>
+<h5 id="（2）在OD中查找字符串"><a href="#（2）在OD中查找字符串" class="headerlink" title="（2）在OD中查找字符串"></a>（2）在OD中查找字符串</h5><p>通过Alt+E快捷键查看可执行模块，找到主模块。点击右键，选择中文搜索引擎选项，根据需要选择搜索ASCLL或搜索UNICODE。</p>
+<h5 id="（3）辅助工具定位法"><a href="#（3）辅助工具定位法" class="headerlink" title="（3）辅助工具定位法"></a>（3）辅助工具定位法</h5><p>针对特定语言或者编译器生成的程序，有一些辅助工具可帮助用户快速定位按键处理程序的地址，如针对MFC程序的xspy，针对Delphi程序的Dede。</p>
+<h3 id="2、常见加密算法识别"><a href="#2、常见加密算法识别" class="headerlink" title="2、常见加密算法识别"></a>2、常见加密算法识别</h3><p>在对数据进行变换的过程中，通常会使用一些常用的加密算法，因此如果能够快速识别出对应的加密算法，就能快速分析出整个完整的算法。</p>
+<h4 id="2、1-base64"><a href="#2、1-base64" class="headerlink" title="2、1 base64"></a>2、1 base64</h4><p>base64主要是将输入中的每3字节（24比特）按每6比特分成一组，变成4个小于64的索引值，然后通过一个索引表得到4个可见的字符。<br>索引表为一个64字节的字符串，如果在代码中发现引用了这个索引表“<strong>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/</strong>”，那么基本上就可以确定使用了base64。此外还有一些变种的base64，主要改变了这个索引表。</p>
+<h4 id="2、2-TEA"><a href="#2、2-TEA" class="headerlink" title="2、2 TEA"></a>2、2 TEA</h4><p>TEA算法是一种常见的分组加密算法，密钥为128比特，明文为64比特，主要做了32轮变换，每轮变换都涉及移位和变换。<br>对TEA的识别也比较容易，在TEA算法中有一个固定的常数<strong>0x9e3779b9</strong>或 <strong>0x61c88647</strong>。</p>
+<h4 id="2、3-AES"><a href="#2、3-AES" class="headerlink" title="2、3 AES"></a>2、3 AES</h4><h4 id="2、4-RC4"><a href="#2、4-RC4" class="headerlink" title="2、4 RC4"></a>2、4 RC4</h4><h4 id="2、5-MD5"><a href="#2、5-MD5" class="headerlink" title="2、5 MD5"></a>2、5 MD5</h4>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>扫码加好友啦🧐<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -257,522 +259,128 @@
 		</ul>
 	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/09/%E6%B1%87%E7%BC%96%E7%9B%B8%E5%85%B3/" class="archive-article-date">
-  	<time datetime="2021-09-09T03:24:29.224Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-09</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/03/13/%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84windows%E8%B0%83%E8%AF%95%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2021-03-13T02:35:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/03/13/%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84windows%E8%B0%83%E8%AF%95%E5%99%A8/">构建自己的windows调试器</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">python灰帽子</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/03/04/github%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2021-03-04T06:41:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/03/04/github%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">github无法访问解决方法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">github</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/02/20/%E6%B7%BB%E5%8A%A0%E4%BB%A3%E7%A0%81/" class="archive-article-date">
-  	<time datetime="2021-02-20T07:35:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/02/20/%E6%B7%BB%E5%8A%A0%E4%BB%A3%E7%A0%81/">添加代码</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">核心工程，逆向原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/01/27/css%E6%A0%B7%E5%BC%8F%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7/" class="archive-article-date">
-  	<time datetime="2021-01-27T02:52:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/01/27/css%E6%A0%B7%E5%BC%8F%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7/">css样式常用属性</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
+
       
+
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/19/DLL%E6%B3%A8%E5%85%A5/" class="archive-article-date">
-  	<time datetime="2020-12-19T11:56:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/19/DLL%E6%B3%A8%E5%85%A5/">DLL注入</a>
-    </h1>
-  
+      </div>
+    </span>
+  </div>
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">核心工程，逆向原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/09/11/%E5%B8%B8%E8%A7%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/" class="archive-article-date">
-  	<time datetime="2020-12-03T07:22:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-03</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2021/09/23/Windows-PE%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Windows PE权威指南学习笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/09/09/%E6%B1%87%E7%BC%96%E7%9B%B8%E5%85%B3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/">Latex中插入参考文献</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Latex</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81%E5%AE%9A%E4%BD%8D"><span class="toc-number">1.</span> <span class="toc-text">1、关键代码定位</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%811-API%E6%96%AD%E7%82%B9%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">1、1 API断点法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%812-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A3%80%E7%B4%A2%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">1、2 字符串检索法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%9C%A8IDA%E4%B8%AD%E6%9F%A5%E6%89%BE%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.2.1.</span> <span class="toc-text">（1）在IDA中查找字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%9C%A8OD%E4%B8%AD%E6%9F%A5%E6%89%BE%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.2.2.</span> <span class="toc-text">（2）在OD中查找字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7%E5%AE%9A%E4%BD%8D%E6%B3%95"><span class="toc-number">1.2.3.</span> <span class="toc-text">（3）辅助工具定位法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E8%AF%86%E5%88%AB"><span class="toc-number">2.</span> <span class="toc-text">2、常见加密算法识别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%811-base64"><span class="toc-number">2.1.</span> <span class="toc-text">2、1 base64</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%812-TEA"><span class="toc-number">2.2.</span> <span class="toc-text">2、2 TEA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%813-AES"><span class="toc-number">2.3.</span> <span class="toc-text">2、3 AES</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%814-RC4"><span class="toc-number">2.4.</span> <span class="toc-text">2、4 RC4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%815-MD5"><span class="toc-number">2.5.</span> <span class="toc-text">2、5 MD5</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99%E8%B0%83%E8%AF%95%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:13:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/01/%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%86%99%E8%B0%83%E8%AF%95%E5%99%A8/">自己动手写调试器</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Python灰帽子</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/hexo-d-%E6%97%B6Could-not-read-from-remote-repository/" class="archive-article-date">
-  	<time datetime="2020-12-01T01:50:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/01/hexo-d-%E6%97%B6Could-not-read-from-remote-repository/">hexo d 时Could not read from remote repository</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-11-30T08:45:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/30/PE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/">PE文件格式</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">核心工程，逆向原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/29/%E6%A0%88%E5%B8%A7/" class="archive-article-date">
-  	<time datetime="2020-11-29T12:58:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/29/%E6%A0%88%E5%B8%A7/">栈帧</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">核心工程，逆向原理栈栈帧在程序中用于声明局部变量、调用函数</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/24/%E8%B0%83%E8%AF%95%E5%99%A8%E8%AE%BE%E8%AE%A1/" class="archive-article-date">
-  	<time datetime="2020-11-24T01:25:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/24/%E8%B0%83%E8%AF%95%E5%99%A8%E8%AE%BE%E8%AE%A1/">调试器设计</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Python灰帽子</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/02/Simple-use-of-blogs/" class="archive-article-date">
-  	<time datetime="2020-11-02T10:59:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/02/Simple-use-of-blogs/">Simple use of blogs</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/25/hello-world/" class="archive-article-date">
-  	<time datetime="2020-05-25T15:25:51.658Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/25/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -799,8 +407,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
