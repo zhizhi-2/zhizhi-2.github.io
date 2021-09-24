@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>栈帧 | zhihzi的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="栈结构在内存中占用一段连续的存储空间，通过esp与ebp这两个栈指针就急促请你来保存当前栈的起始地址与结束地址（又称为栈顶与栈底）。在栈结构中，每4个字节的栈空间保存一个数据，像这样的栈顶到栈底之间的存储空间被称为栈帧。简言之，栈帧就是利用EBP（栈帧指针）寄存器访问栈内局部变量、参数、函数返回地址等的手段。">
+  <meta name="description" content="栈帧在程序中用于声明局部变量、调用函数。栈结构在内存中占用一段连续的存储空间，通过esp与ebp这两个栈指针就急促请你来保存当前栈的起始地址与结束地址（又称为栈顶与栈底）。在栈结构中，每4个字节的栈空间保存一个数据，像这样的栈顶到栈底之间的存储空间被称为栈帧。简言之，栈帧就是利用EBP（栈帧指针）寄存器访问栈内局部变量、参数、函数返回地址等的手段。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="栈帧">
 <meta property="og:url" content="http://yoursite.com/2020/11/29/%E6%A0%88%E5%B8%A7/index.html">
 <meta property="og:site_name" content="zhihzi的博客">
-<meta property="og:description" content="栈结构在内存中占用一段连续的存储空间，通过esp与ebp这两个栈指针就急促请你来保存当前栈的起始地址与结束地址（又称为栈顶与栈底）。在栈结构中，每4个字节的栈空间保存一个数据，像这样的栈顶到栈底之间的存储空间被称为栈帧。简言之，栈帧就是利用EBP（栈帧指针）寄存器访问栈内局部变量、参数、函数返回地址等的手段。">
+<meta property="og:description" content="栈帧在程序中用于声明局部变量、调用函数。栈结构在内存中占用一段连续的存储空间，通过esp与ebp这两个栈指针就急促请你来保存当前栈的起始地址与结束地址（又称为栈顶与栈底）。在栈结构中，每4个字节的栈空间保存一个数据，像这样的栈顶到栈底之间的存储空间被称为栈帧。简言之，栈帧就是利用EBP（栈帧指针）寄存器访问栈内局部变量、参数、函数返回地址等的手段。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/11/29/%E6%A0%88%E5%B8%A7/1.png">
 <meta property="og:image" content="http://yoursite.com/2020/11/29/%E6%A0%88%E5%B8%A7/2.png">
 <meta property="og:image" content="http://yoursite.com/2020/11/29/%E6%A0%88%E5%B8%A7/3.png">
 <meta property="article:published_time" content="2020-11-29T12:58:56.000Z">
-<meta property="article:modified_time" content="2021-09-15T01:45:53.285Z">
+<meta property="article:modified_time" content="2021-09-24T02:42:19.396Z">
 <meta property="article:author" content="zhizhi">
-<meta property="article:tag" content="核心工程，逆向原理栈栈帧在程序中用于声明局部变量、调用函数">
+<meta property="article:tag" content="核心工程，逆向原理">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/11/29/%E6%A0%88%E5%B8%A7/1.png">
   
@@ -71,7 +71,7 @@
 			</ul>
 		</nav>
 		<nav>
-            总文章数 17
+            总文章数 18
         </nav>
 		<nav class="header-smart-menu">
     		
@@ -200,7 +200,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">5分</span>
+        <span class="post-count">6分</span>
       </span>
     </span>
 </div>
@@ -210,7 +210,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>栈结构在内存中占用一段连续的存储空间，通过esp与ebp这两个栈指针就急促请你来保存当前栈的起始地址与结束地址（又称为栈顶与栈底）。在栈结构中，每4个字节的栈空间保存一个数据，像这样的栈顶到栈底之间的存储空间被称为栈帧。简言之，栈帧就是利用<strong>EBP（栈帧指针）寄存器</strong>访问栈内局部变量、参数、函数返回地址等的手段。</p>
+        <p>栈帧在程序中用于声明局部变量、调用函数。栈结构在内存中占用一段连续的存储空间，通过esp与ebp这两个栈指针就急促请你来保存当前栈的起始地址与结束地址（又称为栈顶与栈底）。在栈结构中，每4个字节的栈空间保存一个数据，像这样的栈顶到栈底之间的存储空间被称为栈帧。简言之，栈帧就是利用<strong>EBP（栈帧指针）寄存器</strong>访问栈内局部变量、参数、函数返回地址等的手段。</p>
 <span id="more"></span>
 
 <p>不同的两次函数调用，所形成的栈帧也不相同。当一个函数进入到另一个函数中时，就会针对调用的函数开辟出其所需的栈空间，形成此函数的栈帧。当这个函数结束调用时，需要清除掉它所使用的栈空间，关闭栈帧，我们把这一过程称为栈平衡。</p>
@@ -310,7 +310,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">核心工程，逆向原理栈栈帧在程序中用于声明局部变量、调用函数</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">核心工程，逆向原理</a>
         		</li>
       		
 		</ul>
@@ -562,7 +562,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">核心工程，逆向原理栈栈帧在程序中用于声明局部变量、调用函数</a>
+                <a href="javascript:void(0)" class="js-tag color3">编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">加密与解密</a>
               </li>
             
             <div class="clearfix"></div>

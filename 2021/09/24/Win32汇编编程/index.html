@@ -8,16 +8,17 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Win32汇编编程 | zhihzi的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="菜菜子">
+  <meta name="description" content="Win32应用程序一般使用C语言编程，但是在某些需要进行深层编程的情况下，例如Win32应用程序执行机制分析、病毒清除、加密解密等深层编程，或者对于某些速度要求较高的程序，需要使用汇编语言（甚至机器语言）直接编写Win32应用程序。 基本编程框架： 12345678910111213141516.386.model flat,stdcalloption casemap:none&lt;一些incl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Win32汇编编程">
 <meta property="og:url" content="http://yoursite.com/2021/09/24/Win32%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B/index.html">
 <meta property="og:site_name" content="zhihzi的博客">
-<meta property="og:description" content="菜菜子">
+<meta property="og:description" content="Win32应用程序一般使用C语言编程，但是在某些需要进行深层编程的情况下，例如Win32应用程序执行机制分析、病毒清除、加密解密等深层编程，或者对于某些速度要求较高的程序，需要使用汇编语言（甚至机器语言）直接编写Win32应用程序。 基本编程框架： 12345678910111213141516.386.model flat,stdcalloption casemap:none&lt;一些incl">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-24T02:40:34.000Z">
-<meta property="article:modified_time" content="2021-09-24T02:40:34.851Z">
+<meta property="article:modified_time" content="2021-09-24T09:14:05.941Z">
 <meta property="article:author" content="zhizhi">
+<meta property="article:tag" content="编程">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="zhihzi的博客" type="application/atom+xml">
@@ -66,7 +67,7 @@
 			</ul>
 		</nav>
 		<nav>
-            总文章数 17
+            总文章数 18
         </nav>
 		<nav class="header-smart-menu">
     		
@@ -186,7 +187,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">0字</span>
+        <span class="post-count">1.1k字</span>
       </span>
     </span>
 
@@ -195,7 +196,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1分</span>
+        <span class="post-count">4分</span>
       </span>
     </span>
 </div>
@@ -205,7 +206,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>Win32应用程序一般使用C语言编程，但是在某些需要进行深层编程的情况下，例如Win32应用程序执行机制分析、病毒清除、加密解密等深层编程，或者对于某些速度要求较高的程序，需要使用汇编语言（甚至机器语言）直接编写Win32应用程序。</p>
+<p>基本编程框架：</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">.<span class="number">386</span></span><br><span class="line">.model flat,stdcall</span><br><span class="line">option casemap:<span class="keyword">none</span></span><br><span class="line"><span class="variable">&lt;一些include语句&gt;</span></span><br><span class="line">.stack [堆栈段的大小]</span><br><span class="line">.data</span><br><span class="line"><span class="variable">&lt;一些初始化过的变量定义&gt;</span></span><br><span class="line">.data?</span><br><span class="line"><span class="variable">&lt;一些没有初始化过的变量定义&gt;</span></span><br><span class="line">.<span class="keyword">const</span></span><br><span class="line"><span class="variable">&lt;一些常量定义&gt;</span></span><br><span class="line">.code</span><br><span class="line">     <span class="variable">&lt;代码&gt;</span></span><br><span class="line">     <span class="variable">&lt;开始标号&gt;</span></span><br><span class="line">    <span class="variable">&lt;其它语句&gt;</span></span><br><span class="line">end 开始标号</span><br></pre></td></tr></table></figure>
+
+<h4 id="（1）指令集"><a href="#（1）指令集" class="headerlink" title="（1）指令集"></a>（1）指令集</h4><p>.386语句是汇编语言的伪指令，类似指令有：.8086，.186，.286，.386/.386p，.486/.486p，.586/.586p，其作用是告诉编译器在本程序中使用的指令。</p>
+<p>在DOS的汇编中默认使用的是8086指令集，那时候如果在源程序中写入 80386所特有的指令 或使用 32位的寄存器 就会报错。Win32环境工作在80386及以上的处理器中，386是必不可少的。<br> 另外，后面带p的伪指令则表示程序中可以使用特权指令，如：mov cr0,eax  这一类指令必须在特权极0上运行。</p>
+<h4 id="（2）-model-语句-模式定义"><a href="#（2）-model-语句-模式定义" class="headerlink" title="（2）.model  语句  模式定义"></a>（2）.model  语句  模式定义</h4><p><strong>.model 内存模式， [语言模式]， [其它模式]</strong>   （用中括号括起来的是可要可不要）<br>    <strong>内存模式</strong>的定义影响最后生成的可执行文件，执行文件的规模从小到大，可以很多类型。<br>    <strong>语言模式</strong>即子程序调用方式，它指出了调用子程序或Win32 API时参数传递的次序和堆栈平衡的方法。<br>  1、stdcall调用——是Pascal程序的缺省调用方式，参数采用从右到左的压栈方式（倒序压入），被调用函数 自身在返回前清空堆栈。Win32 API 都采用这种调用方式。<br>  2、cdecl 调用 ——是C/C++的缺省调用方式，参数从右到左的压栈方式，调用者 清空堆栈。 所以产生的可执行文件大小会比调用_stdcall函数大。</p>
+<h4 id="（3）option语句"><a href="#（3）option语句" class="headerlink" title="（3）option语句"></a>（3）option语句</h4><p><strong>option casemap:none</strong> 的意义是告诉编译器程序中变量名和子程序名是否对大小写敏感。 none 对大小写敏感。<br>  Win32 API的函数名称本质是区分大小写的，所以必须指定这个选项。</p>
+<blockquote>
+<p>win32汇编源程序中“分段”的概念实际上是把不同类型的数据或代码归类，再放到不同属性的内存页。（为了安全）</p>
+</blockquote>
+<h4 id="（4）数据段"><a href="#（4）数据段" class="headerlink" title="（4）数据段"></a>（4）数据段</h4><p>1、<strong>.data 、 .data? 、 .const</strong>定义的是数据段，分别对应不同方式的数据定义，在最后生成的可执行文件中也分别放在不同的节区（Section）中<br> 2、程序中的数据定义可以归纳为3类：<br>              ①可读可写的已定义变量。必须定义在.data段中<br>              ②可读可写的未定义变量。汇编语言的特色，一般是当做缓冲区或者程序执行后才开始使用的，可以定义在.data段中,也可以定义在.data?段中，但一般把它放到 .data?段中。 虽然定义在这两个段中都可以正常使用，但定义在 .data?段中不会增大 .exe文件的大小。 .data?段在可执行文件中存放在_BSS节区中。<br>            ③数据是一些常量，如果进行了对.const段中的数据做写操作的指令，会引起保护错误，Windows会显示一个提示框并结束程序<br>             ④在.data?段中，只能用问号预留空间，不能指定初始值</p>
+<h4 id="（5）代码段"><a href="#（5）代码段" class="headerlink" title="（5）代码段"></a>（5）代码段</h4><p>所有指令都必须写在代码段中，在可执行文件中，代码段是放在.text节区中的。</p>
+<h4 id="（6）程序结束和程序入口"><a href="#（6）程序结束和程序入口" class="headerlink" title="（6）程序结束和程序入口"></a>（6）程序结束和程序入口</h4><p><strong>end [开始地址]</strong>：表示源程序结束，所有的代码必须在end语句之前。<br>一个源程序不必非要指定入口标号，这时可以把开始地址忽略不屑，这发生在编写多模块程序的单个模块的时候。只有一个主模块指定入口地址。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">    <span class="number">.386</span>p    ;指定指令集</span><br><span class="line">    .model flat,stdcall</span><br><span class="line">    option casemap:none</span><br><span class="line"> </span><br><span class="line">include windows.inc</span><br><span class="line">include kernel32.inc</span><br><span class="line">includelib kernel32.lib</span><br><span class="line"> </span><br><span class="line">MyDef equ <span class="number">1024</span>         ; 将数值指定名称</span><br><span class="line"> </span><br><span class="line">.data</span><br><span class="line">    Main WORD <span class="number">1024</span>      ; 定义可赋值的变量</span><br><span class="line">.data?                  ; 定义未知初始变量</span><br><span class="line">    lyshark DWORD ?</span><br><span class="line"> </span><br><span class="line">.code</span><br><span class="line">    main PROC</span><br><span class="line">        <span class="keyword">xor</span> eax,eax</span><br><span class="line">        invoke ExitProcess,<span class="number">0</span></span><br><span class="line">    main ENDP</span><br><span class="line">END main</span><br></pre></td></tr></table></figure>
+
+
       
 
       
@@ -239,6 +256,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">编程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -303,6 +331,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2021/09/24/%E8%84%B1%E5%A3%B3%E6%8A%80%E6%9C%AF/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          脱壳技术
+        
+      </div>
+    </a>
+  
   
     <a href="/2021/09/23/Windows-PE%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">Windows PE权威指南学习笔记</div>
@@ -332,7 +369,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">（1）指令集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89-model-%E8%AF%AD%E5%8F%A5-%E6%A8%A1%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">（2）.model  语句  模式定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89option%E8%AF%AD%E5%8F%A5"><span class="toc-number">3.</span> <span class="toc-text">（3）option语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E6%95%B0%E6%8D%AE%E6%AE%B5"><span class="toc-number">4.</span> <span class="toc-text">（4）数据段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%885%EF%BC%89%E4%BB%A3%E7%A0%81%E6%AE%B5"><span class="toc-number">5.</span> <span class="toc-text">（5）代码段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%886%EF%BC%89%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9D%9F%E5%92%8C%E7%A8%8B%E5%BA%8F%E5%85%A5%E5%8F%A3"><span class="toc-number">6.</span> <span class="toc-text">（6）程序结束和程序入口</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -476,7 +513,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">核心工程，逆向原理栈栈帧在程序中用于声明局部变量、调用函数</a>
+                <a href="javascript:void(0)" class="js-tag color3">编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">加密与解密</a>
               </li>
             
             <div class="clearfix"></div>

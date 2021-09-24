@@ -64,7 +64,7 @@
 			</ul>
 		</nav>
 		<nav>
-            总文章数 17
+            总文章数 18
         </nav>
 		<nav class="header-smart-menu">
     		
@@ -153,6 +153,126 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-脱壳技术" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/09/24/%E8%84%B1%E5%A3%B3%E6%8A%80%E6%9C%AF/">脱壳技术</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+
+<!--显示阅读次数完毕-->
+
+        
+        <a href="/2021/09/24/%E8%84%B1%E5%A3%B3%E6%8A%80%E6%9C%AF/" class="archive-article-date">
+  	<time datetime="2021-09-24T10:27:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-24</time>
+</a>
+		 
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">768字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">2分</span>
+      </span>
+    </span>
+</div>
+          
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>现在越来越多的软件都采用了加壳保护。在软件分析和汉化过程中，脱壳是必不可少的一步。</p>
+<h3 id="1、认识壳"><a href="#1、认识壳" class="headerlink" title="1、认识壳"></a>1、认识壳</h3><p>壳是最早出现的一种专用加密软件技术。在一些计算机软件里有一段专门负责保护软件不被非法修改或反编译的程序。他们附加在源程序上通过Windows加载器载入内存后，先于原始程序执行，得到控制权，执行过程中对原始程序进行解密、还原，还原完成后再把控制权交给原始程序，执行原来的代码部分。</p>
+<p>常见的壳的种类，压缩壳：UPX、ASPack、PECompact，压缩壳的特点就是减小软件体积大小。加密壳：ASProtect、Armadillo、EXECryptor。加密壳的种类较多，不同的壳侧重点不同，一些壳单纯保护程序，另外一些壳还提供额外的功能，如提供注册机制、使用次数、时间限制等。</p>
+<h3 id="2、壳的加载过程"><a href="#2、壳的加载过程" class="headerlink" title="2、壳的加载过程"></a>2、壳的加载过程</h3><p>壳和病毒在某些方面比较类似，都需要比原程序代码更早的获得控制权。壳修改了原程序的执行文件的组织结构，从而能够比原程序的代码提前获得控制权，并且不会映像原程序的执行。</p>
+<p>壳的常见加载过程如下：</p>
+<p>（1）保存入口函数</p>
+<p>加壳程序初始化时保存各寄存器的值，外壳执行完毕，再恢复各寄存器内容，最后再跳到原程序执行。通常用<strong>pushad/popad、pushfd/popfd</strong>指令对来保存与恢复现场环境。</p>
+<p>（2）获取壳自己所需使用的API地址</p>
+<p>一般情况下，外壳的输入表中只有<strong>GetProcAddress</strong>、<strong>GetModuleHandle</strong>和<strong>LoadLibrary</strong>这三个API函数，甚至只有Kernel32.dll及GetProcAddress。如果需要使用其他API函数，可以通过函数LoadLibrary将DLL文件映射到调用进程的地址空间中。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HINSTANCE LoadLibrary(</span><br><span class="line">    LPCTSTR lpLibFileName          <span class="regexp">//</span>DLL文件名地址</span><br><span class="line">)</span><br><span class="line"><span class="regexp">//</span>返回值：成功则返回模块的句柄，失败则返回“NULL”。</span><br></pre></td></tr></table></figure>
+
+<p>如果DLL文件已被映射到调用进程的地址空间中，可以调用GetModuleHandle函数获得DLL模块句柄。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HMODULE GetModuleHandle(</span><br><span class="line">   LPCTSTR lpModuleName     <span class="regexp">//</span>DLL文件名地址</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>一旦DLL模块被加载，线程就可以调用GetProcAddress函数获取输入函数的地址。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FARPROC GetProcAddress(</span><br><span class="line">    HMODULE hModule,     <span class="regexp">//</span>DLL模块句柄,是调用LoadLibrary或GetModuleHandle函数的返回值</span><br><span class="line">    LPCSTR lpProcName      <span class="regexp">//</span>函数名</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>（3）解密原程序各个区块的数据</p>
+<p>出于保护原程序代码和数据的目的，壳一般会加密原程序文件的各个区块。在程序执行时，外壳将解密这些区块数据，从而使程序能够正常进行。壳一般是按区块加密的，所以解密时也是按区块解密，并把解密的区块数据按照区块的定义放在内存中的合适的位置。</p>
+<p>（4）IAT的初始化</p>
+<p>（5）重定位项的处理</p>
+<p>（6）Hook API</p>
+<p>（7）跳转到 程序原入口点（OEP）</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">加密与解密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/09/24/%E8%84%B1%E5%A3%B3%E6%8A%80%E6%9C%AF/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Win32汇编编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -178,7 +298,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">0字</span>
+        <span class="post-count">1.1k字</span>
       </span>
     </span>
 
@@ -187,7 +307,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1分</span>
+        <span class="post-count">4分</span>
       </span>
     </span>
 </div>
@@ -197,7 +317,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>Win32应用程序一般使用C语言编程，但是在某些需要进行深层编程的情况下，例如Win32应用程序执行机制分析、病毒清除、加密解密等深层编程，或者对于某些速度要求较高的程序，需要使用汇编语言（甚至机器语言）直接编写Win32应用程序。</p>
+<p>基本编程框架：</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">.<span class="number">386</span></span><br><span class="line">.model flat,stdcall</span><br><span class="line">option casemap:<span class="keyword">none</span></span><br><span class="line"><span class="variable">&lt;一些include语句&gt;</span></span><br><span class="line">.stack [堆栈段的大小]</span><br><span class="line">.data</span><br><span class="line"><span class="variable">&lt;一些初始化过的变量定义&gt;</span></span><br><span class="line">.data?</span><br><span class="line"><span class="variable">&lt;一些没有初始化过的变量定义&gt;</span></span><br><span class="line">.<span class="keyword">const</span></span><br><span class="line"><span class="variable">&lt;一些常量定义&gt;</span></span><br><span class="line">.code</span><br><span class="line">     <span class="variable">&lt;代码&gt;</span></span><br><span class="line">     <span class="variable">&lt;开始标号&gt;</span></span><br><span class="line">    <span class="variable">&lt;其它语句&gt;</span></span><br><span class="line">end 开始标号</span><br></pre></td></tr></table></figure>
+
+<h4 id="（1）指令集"><a href="#（1）指令集" class="headerlink" title="（1）指令集"></a>（1）指令集</h4><p>.386语句是汇编语言的伪指令，类似指令有：.8086，.186，.286，.386/.386p，.486/.486p，.586/.586p，其作用是告诉编译器在本程序中使用的指令。</p>
+<p>在DOS的汇编中默认使用的是8086指令集，那时候如果在源程序中写入 80386所特有的指令 或使用 32位的寄存器 就会报错。Win32环境工作在80386及以上的处理器中，386是必不可少的。<br> 另外，后面带p的伪指令则表示程序中可以使用特权指令，如：mov cr0,eax  这一类指令必须在特权极0上运行。</p>
+<h4 id="（2）-model-语句-模式定义"><a href="#（2）-model-语句-模式定义" class="headerlink" title="（2）.model  语句  模式定义"></a>（2）.model  语句  模式定义</h4><p><strong>.model 内存模式， [语言模式]， [其它模式]</strong>   （用中括号括起来的是可要可不要）<br>    <strong>内存模式</strong>的定义影响最后生成的可执行文件，执行文件的规模从小到大，可以很多类型。<br>    <strong>语言模式</strong>即子程序调用方式，它指出了调用子程序或Win32 API时参数传递的次序和堆栈平衡的方法。<br>  1、stdcall调用——是Pascal程序的缺省调用方式，参数采用从右到左的压栈方式（倒序压入），被调用函数 自身在返回前清空堆栈。Win32 API 都采用这种调用方式。<br>  2、cdecl 调用 ——是C/C++的缺省调用方式，参数从右到左的压栈方式，调用者 清空堆栈。 所以产生的可执行文件大小会比调用_stdcall函数大。</p>
+<h4 id="（3）option语句"><a href="#（3）option语句" class="headerlink" title="（3）option语句"></a>（3）option语句</h4><p><strong>option casemap:none</strong> 的意义是告诉编译器程序中变量名和子程序名是否对大小写敏感。 none 对大小写敏感。<br>  Win32 API的函数名称本质是区分大小写的，所以必须指定这个选项。</p>
+<blockquote>
+<p>win32汇编源程序中“分段”的概念实际上是把不同类型的数据或代码归类，再放到不同属性的内存页。（为了安全）</p>
+</blockquote>
+<h4 id="（4）数据段"><a href="#（4）数据段" class="headerlink" title="（4）数据段"></a>（4）数据段</h4><p>1、<strong>.data 、 .data? 、 .const</strong>定义的是数据段，分别对应不同方式的数据定义，在最后生成的可执行文件中也分别放在不同的节区（Section）中<br> 2、程序中的数据定义可以归纳为3类：<br>              ①可读可写的已定义变量。必须定义在.data段中<br>              ②可读可写的未定义变量。汇编语言的特色，一般是当做缓冲区或者程序执行后才开始使用的，可以定义在.data段中,也可以定义在.data?段中，但一般把它放到 .data?段中。 虽然定义在这两个段中都可以正常使用，但定义在 .data?段中不会增大 .exe文件的大小。 .data?段在可执行文件中存放在_BSS节区中。<br>            ③数据是一些常量，如果进行了对.const段中的数据做写操作的指令，会引起保护错误，Windows会显示一个提示框并结束程序<br>             ④在.data?段中，只能用问号预留空间，不能指定初始值</p>
+<h4 id="（5）代码段"><a href="#（5）代码段" class="headerlink" title="（5）代码段"></a>（5）代码段</h4><p>所有指令都必须写在代码段中，在可执行文件中，代码段是放在.text节区中的。</p>
+<h4 id="（6）程序结束和程序入口"><a href="#（6）程序结束和程序入口" class="headerlink" title="（6）程序结束和程序入口"></a>（6）程序结束和程序入口</h4><p><strong>end [开始地址]</strong>：表示源程序结束，所有的代码必须在end语句之前。<br>一个源程序不必非要指定入口标号，这时可以把开始地址忽略不屑，这发生在编写多模块程序的单个模块的时候。只有一个主模块指定入口地址。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">    <span class="number">.386</span>p    ;指定指令集</span><br><span class="line">    .model flat,stdcall</span><br><span class="line">    option casemap:none</span><br><span class="line"> </span><br><span class="line">include windows.inc</span><br><span class="line">include kernel32.inc</span><br><span class="line">includelib kernel32.lib</span><br><span class="line"> </span><br><span class="line">MyDef equ <span class="number">1024</span>         ; 将数值指定名称</span><br><span class="line"> </span><br><span class="line">.data</span><br><span class="line">    Main WORD <span class="number">1024</span>      ; 定义可赋值的变量</span><br><span class="line">.data?                  ; 定义未知初始变量</span><br><span class="line">    lyshark DWORD ?</span><br><span class="line"> </span><br><span class="line">.code</span><br><span class="line">    main PROC</span><br><span class="line">        <span class="keyword">xor</span> eax,eax</span><br><span class="line">        invoke ExitProcess,<span class="number">0</span></span><br><span class="line">    main ENDP</span><br><span class="line">END main</span><br></pre></td></tr></table></figure>
+
+
       
 
       
@@ -205,6 +341,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">编程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -989,104 +1136,6 @@
 
 
   
-    <article id="post-Latex中插入参考文献" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/">Latex中插入参考文献</a>
-    </h1>
-  
-
-		<!--显示阅读次数-->
-
-<!--显示阅读次数完毕-->
-
-        
-        <a href="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/" class="archive-article-date">
-  	<time datetime="2020-12-03T07:22:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-03</time>
-</a>
-		 
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">797字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">3分</span>
-      </span>
-    </span>
-</div>
-          
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文介绍了在Latex中插入参考文献的两种方式。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Latex</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1216,7 +1265,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">核心工程，逆向原理栈栈帧在程序中用于声明局部变量、调用函数</a>
+                <a href="javascript:void(0)" class="js-tag color3">编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">加密与解密</a>
               </li>
             
             <div class="clearfix"></div>
