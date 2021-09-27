@@ -16,7 +16,7 @@
 <meta property="og:description" content="现在越来越多的软件都采用了加壳保护。在软件分析和汉化过程中，脱壳是必不可少的一步。 1、认识壳壳是最早出现的一种专用加密软件技术。在一些计算机软件里有一段专门负责保护软件不被非法修改或反编译的程序。他们附加在源程序上通过Windows加载器载入内存后，先于原始程序执行，得到控制权，执行过程中对原始程序进行解密、还原，还原完成后再把控制权交给原始程序，执行原来的代码部分。 常见的壳的种类，压缩壳：U">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-24T10:27:27.000Z">
-<meta property="article:modified_time" content="2021-09-24T11:17:57.129Z">
+<meta property="article:modified_time" content="2021-09-25T05:29:21.945Z">
 <meta property="article:author" content="zhizhi">
 <meta property="article:tag" content="加密与解密">
 <meta name="twitter:card" content="summary">
@@ -187,7 +187,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">768字</span>
+        <span class="post-count">2.4k字</span>
       </span>
     </span>
 
@@ -196,7 +196,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">2分</span>
+        <span class="post-count">8分</span>
       </span>
     </span>
 </div>
@@ -211,10 +211,8 @@
 <p>常见的壳的种类，压缩壳：UPX、ASPack、PECompact，压缩壳的特点就是减小软件体积大小。加密壳：ASProtect、Armadillo、EXECryptor。加密壳的种类较多，不同的壳侧重点不同，一些壳单纯保护程序，另外一些壳还提供额外的功能，如提供注册机制、使用次数、时间限制等。</p>
 <h3 id="2、壳的加载过程"><a href="#2、壳的加载过程" class="headerlink" title="2、壳的加载过程"></a>2、壳的加载过程</h3><p>壳和病毒在某些方面比较类似，都需要比原程序代码更早的获得控制权。壳修改了原程序的执行文件的组织结构，从而能够比原程序的代码提前获得控制权，并且不会映像原程序的执行。</p>
 <p>壳的常见加载过程如下：</p>
-<p>（1）保存入口函数</p>
-<p>加壳程序初始化时保存各寄存器的值，外壳执行完毕，再恢复各寄存器内容，最后再跳到原程序执行。通常用<strong>pushad/popad、pushfd/popfd</strong>指令对来保存与恢复现场环境。</p>
-<p>（2）获取壳自己所需使用的API地址</p>
-<p>一般情况下，外壳的输入表中只有<strong>GetProcAddress</strong>、<strong>GetModuleHandle</strong>和<strong>LoadLibrary</strong>这三个API函数，甚至只有Kernel32.dll及GetProcAddress。如果需要使用其他API函数，可以通过函数LoadLibrary将DLL文件映射到调用进程的地址空间中。</p>
+<h5 id="（1）保存入口函数"><a href="#（1）保存入口函数" class="headerlink" title="（1）保存入口函数"></a>（1）保存入口函数</h5><p>加壳程序初始化时保存各寄存器的值，外壳执行完毕，再恢复各寄存器内容，最后再跳到原程序执行。通常用<strong>pushad/popad、pushfd/popfd</strong>指令对来保存与恢复现场环境。</p>
+<h5 id="（2）获取壳自己所需使用的API地址"><a href="#（2）获取壳自己所需使用的API地址" class="headerlink" title="（2）获取壳自己所需使用的API地址"></a>（2）获取壳自己所需使用的API地址</h5><p>一般情况下，外壳的输入表中只有<strong>GetProcAddress</strong>、<strong>GetModuleHandle</strong>和<strong>LoadLibrary</strong>这三个API函数，甚至只有Kernel32.dll及GetProcAddress。如果需要使用其他API函数，可以通过函数LoadLibrary将DLL文件映射到调用进程的地址空间中。</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HINSTANCE LoadLibrary(</span><br><span class="line">    LPCTSTR lpLibFileName          <span class="regexp">//</span>DLL文件名地址</span><br><span class="line">)</span><br><span class="line"><span class="regexp">//</span>返回值：成功则返回模块的句柄，失败则返回“NULL”。</span><br></pre></td></tr></table></figure>
 
 <p>如果DLL文件已被映射到调用进程的地址空间中，可以调用GetModuleHandle函数获得DLL模块句柄。</p>
@@ -223,12 +221,26 @@
 <p>一旦DLL模块被加载，线程就可以调用GetProcAddress函数获取输入函数的地址。</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FARPROC GetProcAddress(</span><br><span class="line">    HMODULE hModule,     <span class="regexp">//</span>DLL模块句柄,是调用LoadLibrary或GetModuleHandle函数的返回值</span><br><span class="line">    LPCSTR lpProcName      <span class="regexp">//</span>函数名</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
-<p>（3）解密原程序各个区块的数据</p>
-<p>出于保护原程序代码和数据的目的，壳一般会加密原程序文件的各个区块。在程序执行时，外壳将解密这些区块数据，从而使程序能够正常进行。壳一般是按区块加密的，所以解密时也是按区块解密，并把解密的区块数据按照区块的定义放在内存中的合适的位置。</p>
-<p>（4）IAT的初始化</p>
-<p>（5）重定位项的处理</p>
-<p>（6）Hook API</p>
-<p>（7）跳转到 程序原入口点（OEP）</p>
+<h5 id="（3）解密原程序各个区块的数据"><a href="#（3）解密原程序各个区块的数据" class="headerlink" title="（3）解密原程序各个区块的数据"></a>（3）解密原程序各个区块的数据</h5><p>出于保护原程序代码和数据的目的，壳一般会加密原程序文件的各个区块。在程序执行时，外壳将解密这些区块数据，从而使程序能够正常进行。壳一般是按区块加密的，所以解密时也是按区块解密，并把解密的区块数据按照区块的定义放在内存中的合适的位置。</p>
+<h5 id="（4）IAT的初始化"><a href="#（4）IAT的初始化" class="headerlink" title="（4）IAT的初始化"></a>（4）IAT的初始化</h5><p>IAT的填写本来是由PE装载器实现，但由于在加壳时构造了一个自建输入表，并让PE文件头数据目录表中的输入表指针指向自建的输入表，PE装载器会对自建的输入表进行填写。程序的原始输入表被外壳变形后存储，IAT的填写会由外壳程序实现。外壳程序需要把这个变形输入表的结构从头到尾扫描一遍，重新获取每一个DLL引入的所有函数地址，并将其填写在IAT中。</p>
+<h5 id="（5）重定位项的处理"><a href="#（5）重定位项的处理" class="headerlink" title="（5）重定位项的处理"></a>（5）重定位项的处理</h5><p>文件执行时被映射到指定内存地址中，这个初始内存地址称为基址。对于EXE文件而言，无需重定位，所以一些加壳软件会直接删除原程序我呢见中用于保存重定位信息的区块，从而使得加壳后的文件更加小巧。当对于DLL文件，Windows系统无法保证DLL每次运行时都提供相同的基地址，所以需要重定位。此时壳中也要有用于“重定位”的代码，否则原程序中的代码无法正常运行。</p>
+<h5 id="（6）Hook-API"><a href="#（6）Hook-API" class="headerlink" title="（6）Hook API"></a>（6）Hook API</h5><p>在程序文件中，输入表的作用就是让Windows操作系统在程序运行时将API的实际地址提供给程序使用。在程序的第一行代码被执行之前，操作系统就完成了此项工作。<br>外壳程序一般都在修改原程序文件的输入表后模仿Windows操作系统的工作流程，向输入表中填充相关的数据。在填充过程中，外壳可以填充Hook API代码的地址，从而间接获得程序的控制权。</p>
+<h5 id="（7）跳转到-程序原入口点（OEP）"><a href="#（7）跳转到-程序原入口点（OEP）" class="headerlink" title="（7）跳转到 程序原入口点（OEP）"></a>（7）跳转到 程序原入口点（OEP）</h5><p>此时壳就把控制权交给原程序了。</p>
+<h3 id="3、手动脱壳"><a href="#3、手动脱壳" class="headerlink" title="3、手动脱壳"></a>3、手动脱壳</h3><p>对一些加密壳或修改的壳，没有脱壳机，因此必须要分析外壳并手动脱壳。在程序执行时，外壳代码首先获得控制权，模拟Windows装载器，将原来程序恢复到内存中。这时，内存中的数据就是加壳前的映像文件了。适时将其抓取并修改，即可还原到加壳前的状态。</p>
+<h3 id="4、寻找OEP"><a href="#4、寻找OEP" class="headerlink" title="4、寻找OEP"></a>4、寻找OEP</h3><p>程序解压后真正的程序入口点称为“OEP”（Original Entry Point,原程序入口点）。</p>
+<h4 id="4、1-根据跨段指令寻找OEP"><a href="#4、1-根据跨段指令寻找OEP" class="headerlink" title="4、1 根据跨段指令寻找OEP"></a>4、1 根据跨段指令寻找OEP</h4><h4 id="4、2-用内存访问断点寻找OEP"><a href="#4、2-用内存访问断点寻找OEP" class="headerlink" title="4、2 用内存访问断点寻找OEP"></a>4、2 用内存访问断点寻找OEP</h4><p>外壳程序一般会先将压缩的代码解压并释放到对应的区块上，处理完毕后再跳转到代码段执行。因为OllyDbg具有对代码段设断的功能，所以无需手动跟踪。当对<strong>代码段（.text）</strong>设置<strong>内存访问断点</strong>时，程序一定会中断在外壳对代码进行读取的那句指令上。</p>
+<p>这个方法的关键是待代码段解压完毕对代码段设置内存访问断点。如果 之前设置了内存访问断点，程序会不停的在对代码进行写入的指令处中断。我们可通过<strong>设置两次内存断点</strong>解决此问题。因为一般的壳会依次对.text、.rdata、.data、.rsrc区块进行解压处理，所以可先在.rdata、.data等区块处设置内存访问断点，待程序中断，代码段已解压，再对代码段设置内存访问断点。</p>
+<h4 id="4、3-根据栈平衡原理寻找OEP"><a href="#4、3-根据栈平衡原理寻找OEP" class="headerlink" title="4、3 根据栈平衡原理寻找OEP"></a>4、3 根据栈平衡原理寻找OEP</h4><p>在编写加壳软件时必须 保证外壳初始化的现场（各寄存器值）与原程序的现场环境相同（主要是ESP、EBP等重要寄存器的值）。也就是说在编写加壳软件时，必须遵守栈平衡原理。具体如下。</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">PUSHAD</span>  //相当于<span class="keyword">push</span> <span class="built_in">eax</span>/<span class="built_in">ecx</span>/<span class="built_in">edx</span>/<span class="built_in">ebx</span>/<span class="built_in">esp</span>/<span class="built_in">ebp</span>/<span class="built_in">esi</span>/<span class="built_in">edi</span></span><br><span class="line">  ……      //外壳代码</span><br><span class="line">  <span class="keyword">POPAD</span>   //相当于<span class="keyword">pop</span> <span class="built_in">eax</span>/<span class="built_in">ecx</span>/<span class="built_in">edx</span>/<span class="built_in">ebx</span>/<span class="built_in">esp</span>/<span class="built_in">ebp</span>/<span class="built_in">esi</span>/<span class="built_in">edi</span></span><br><span class="line">  <span class="keyword">JMP</span> OEP</span><br><span class="line"></span><br><span class="line">OEP：……   //解压后程序的源代码</span><br></pre></td></tr></table></figure>
+
+<p>可以把整个外壳代码作为一个函数或子程序来理解，这个过程遵守栈平衡原理，当其跳转到OEP时，esp的值不会改变。在脱壳时，根据栈平衡原理对esp设断，就能很快找到OEP。具体操作：在执行完pushad后，<strong>对esp指向的地址设置硬件访问地址</strong>。随后按“F9”运行程序，外壳代码运行结束以后，在调用popad指令恢复现场时访问这些栈，Ollydbg就会中断，此处离OEP就不远了。</p>
+<p>同时我们知道大多数程序OEP的第一句指令都是压栈指令（push指令），当外壳程序开始运行时，记下<strong>当时esp的值</strong>。程序解压后 ，来到OEP处，其第一句指令是“push ebp”，即对esp-4处进行写入操作，因此我们可以一开始<strong>对esp-4处设置硬件写断点</strong>，就可很快的到达OEP附近。</p>
+<h4 id="4、4-根据编译语言特点寻找OEP"><a href="#4、4-根据编译语言特点寻找OEP" class="headerlink" title="4、4 根据编译语言特点寻找OEP"></a>4、4 根据编译语言特点寻找OEP</h4><p>各类语言编译的文件入口点都有自己的特点 。使用同一种编译器编译的程序，其入口代码，都很类似，都有一段启动代码。例如VC6的启动部分有GetCommandLineA(W)、GetModuleHandleA(W)、GetVersion、GetSatrtupInfoA(W)等函数，因此可以用这些函数来设置断点，从而方便地定位程序。</p>
+<h3 id="5、Dump-抓取内存映像"><a href="#5、Dump-抓取内存映像" class="headerlink" title="5、Dump(抓取内存映像)"></a>5、Dump(抓取内存映像)</h3><p>抓取内存映像，也称“转储”（Dump）,是指把指定地址地映像文件读出，用文件等形式将其保存起来的过程。脱壳时，在何时Dump有一定的技巧。在一般情况下，当外壳来到OEP处时进行Dump是合适的。如果等到程序运行起来，由于一些变量已经初始化，就不适合Dump。</p>
+<p>常用的Dump软件有LordPE、PETools等。这类工具一般都是利用 ModuleNext32来获取欲Dump进程的基本信息。</p>
+<h3 id="6、重建输入表"><a href="#6、重建输入表" class="headerlink" title="6、重建输入表"></a>6、重建输入表</h3><p>破坏原程序的输入表是加密外壳必须具备的功能，在脱壳时，输入表处理是一个关键的环节。</p>
+<p>外壳程序一般会修改原程序的输入表，然后自己模仿Windows装载器来填充IAT的相关数据，也就是 说，内存中只有一个IAT，原程序的输入表不在内存中。输入表的重建即指根据此IAT还原整个输入表的结构 ，包括IID结构及各成员指向的数据等。</p>
+<p>一些</p>
 
       
 
@@ -367,7 +379,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E8%AE%A4%E8%AF%86%E5%A3%B3"><span class="toc-number">1.</span> <span class="toc-text">1、认识壳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%A3%B3%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">2、壳的加载过程</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E8%AE%A4%E8%AF%86%E5%A3%B3"><span class="toc-number">1.</span> <span class="toc-text">1、认识壳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%A3%B3%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">2、壳的加载过程</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E4%BF%9D%E5%AD%98%E5%85%A5%E5%8F%A3%E5%87%BD%E6%95%B0"><span class="toc-number">2.0.1.</span> <span class="toc-text">（1）保存入口函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E8%8E%B7%E5%8F%96%E5%A3%B3%E8%87%AA%E5%B7%B1%E6%89%80%E9%9C%80%E4%BD%BF%E7%94%A8%E7%9A%84API%E5%9C%B0%E5%9D%80"><span class="toc-number">2.0.2.</span> <span class="toc-text">（2）获取壳自己所需使用的API地址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E8%A7%A3%E5%AF%86%E5%8E%9F%E7%A8%8B%E5%BA%8F%E5%90%84%E4%B8%AA%E5%8C%BA%E5%9D%97%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="toc-number">2.0.3.</span> <span class="toc-text">（3）解密原程序各个区块的数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%884%EF%BC%89IAT%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.0.4.</span> <span class="toc-text">（4）IAT的初始化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%885%EF%BC%89%E9%87%8D%E5%AE%9A%E4%BD%8D%E9%A1%B9%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-number">2.0.5.</span> <span class="toc-text">（5）重定位项的处理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%886%EF%BC%89Hook-API"><span class="toc-number">2.0.6.</span> <span class="toc-text">（6）Hook API</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%887%EF%BC%89%E8%B7%B3%E8%BD%AC%E5%88%B0-%E7%A8%8B%E5%BA%8F%E5%8E%9F%E5%85%A5%E5%8F%A3%E7%82%B9%EF%BC%88OEP%EF%BC%89"><span class="toc-number">2.0.7.</span> <span class="toc-text">（7）跳转到 程序原入口点（OEP）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E6%89%8B%E5%8A%A8%E8%84%B1%E5%A3%B3"><span class="toc-number">3.</span> <span class="toc-text">3、手动脱壳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E5%AF%BB%E6%89%BEOEP"><span class="toc-number">4.</span> <span class="toc-text">4、寻找OEP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%811-%E6%A0%B9%E6%8D%AE%E8%B7%A8%E6%AE%B5%E6%8C%87%E4%BB%A4%E5%AF%BB%E6%89%BEOEP"><span class="toc-number">4.1.</span> <span class="toc-text">4、1 根据跨段指令寻找OEP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%812-%E7%94%A8%E5%86%85%E5%AD%98%E8%AE%BF%E9%97%AE%E6%96%AD%E7%82%B9%E5%AF%BB%E6%89%BEOEP"><span class="toc-number">4.2.</span> <span class="toc-text">4、2 用内存访问断点寻找OEP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%813-%E6%A0%B9%E6%8D%AE%E6%A0%88%E5%B9%B3%E8%A1%A1%E5%8E%9F%E7%90%86%E5%AF%BB%E6%89%BEOEP"><span class="toc-number">4.3.</span> <span class="toc-text">4、3 根据栈平衡原理寻找OEP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%814-%E6%A0%B9%E6%8D%AE%E7%BC%96%E8%AF%91%E8%AF%AD%E8%A8%80%E7%89%B9%E7%82%B9%E5%AF%BB%E6%89%BEOEP"><span class="toc-number">4.4.</span> <span class="toc-text">4、4 根据编译语言特点寻找OEP</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81Dump-%E6%8A%93%E5%8F%96%E5%86%85%E5%AD%98%E6%98%A0%E5%83%8F"><span class="toc-number">5.</span> <span class="toc-text">5、Dump(抓取内存映像)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81%E9%87%8D%E5%BB%BA%E8%BE%93%E5%85%A5%E8%A1%A8"><span class="toc-number">6.</span> <span class="toc-text">6、重建输入表</span></a></li></ol>
                     </div>
                 </span>
             </div>
