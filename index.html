@@ -64,7 +64,7 @@
 			</ul>
 		</nav>
 		<nav>
-            总文章数 18
+            总文章数 19
         </nav>
 		<nav class="header-smart-menu">
     		
@@ -152,6 +152,104 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-高级逆向分析技术" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/10/07/%E9%AB%98%E7%BA%A7%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF/">高级逆向分析技术</a>
+    </h1>
+  
+
+		<!--显示阅读次数-->
+
+<!--显示阅读次数完毕-->
+
+        
+        <a href="/2021/10/07/%E9%AB%98%E7%BA%A7%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF/" class="archive-article-date">
+  	<time datetime="2021-10-07T09:51:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-07</time>
+</a>
+		 
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">195字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">1分</span>
+      </span>
+    </span>
+</div>
+          
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在一些程序中设计者为了防止程序被调试，常常加入了反调试技术，加大程序调试的难度，本文主要介绍了关于高级调试中的一些基础知识，便于后面应对反调试技术。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">核心工程，逆向原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/10/07/%E9%AB%98%E7%BA%A7%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-脱壳技术" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -632,6 +730,12 @@
 <p>如果一个数是2的幂，会用<strong>左移指令shl</strong>来实现乘法运算。此外，加法对于提高3、5、6、7、9等数的乘法运算效率也非常有用。如，“eax<em>5”可以写成”lea eax,[eax+4</em>eax]”。lea指令可以实现寄存器乘以2、4或8的运算。</p>
 <h4 id="2、3-整数的除法"><a href="#2、3-整数的除法" class="headerlink" title="2、3 整数的除法"></a>2、3 整数的除法</h4><p>除法运算符一般被编译成div、idiv指令。除法运算的代价相当高，大概需要比乘法运算多消耗10倍的CPU时钟。</p>
 <p>如果除数是2的幂，可以使用右移指令“shr a,n”来替换，其中a是被除数，n是基数2的指数。若是进行符号数计算，则使用sar指令。</p>
+<p>push 立即数/32位寄存器              //ESP-4</p>
+<p>push ax                                          //EBP-2，push指令不允许使用8位的寄存器</p>
+<p>标志寄存器</p>
+<img src="/2021/09/09/%E6%B1%87%E7%BC%96%E7%9B%B8%E5%85%B3/Users\zhizhi\AppData\Roaming\Typora\typora-user-images\image-20211001171524947.png" alt="image-20211001171524947" style="zoom:50%;">
+
+<p>1、进位标志（Carry Flag）：如果运算的结果的最高位产生进位或借位，那么其值位1，否则为0。</p>
 
       
 
@@ -1045,104 +1149,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/01/27/css%E6%A0%B7%E5%BC%8F%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-DLL注入" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/19/DLL%E6%B3%A8%E5%85%A5/">DLL注入</a>
-    </h1>
-  
-
-		<!--显示阅读次数-->
-
-<!--显示阅读次数完毕-->
-
-        
-        <a href="/2020/12/19/DLL%E6%B3%A8%E5%85%A5/" class="archive-article-date">
-  	<time datetime="2020-12-19T11:56:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-19</time>
-</a>
-		 
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">617字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">2分</span>
-      </span>
-    </span>
-</div>
-          
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>DLL注入是（DLL Injection）是渗透其他进程的最简单有效的方法，借助DLL注入，可以勾取API、改进程序、修复Bug。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">核心工程，逆向原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/19/DLL%E6%B3%A8%E5%85%A5/">展开全文 >></a>
         </p>
       
 

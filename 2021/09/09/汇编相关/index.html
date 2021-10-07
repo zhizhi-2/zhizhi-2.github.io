@@ -15,10 +15,12 @@
 <meta property="og:site_name" content="zhihzi的博客">
 <meta property="og:description" content="汇编相关寄存器： （1）push 操作数       &#x2F;&#x2F;把一个32位的操作数压入堆栈中，这个操作将使得esp-4。（2）pop 操作数        &#x2F;&#x2F;把栈顶的数据弹出，该操作数通常为寄存器，即把弹出的数据保存到此寄存器       中。（3）mul 操作数        &#x2F;&#x2F;无符号乘法指令，默认操作数与eax相乘（4）cmp  dest source    &#x2F;&#x2F;计算dest-source，但">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2021/09/09/%E6%B1%87%E7%BC%96%E7%9B%B8%E5%85%B3/Users/zhizhi/AppData/Roaming/Typora/typora-user-images/image-20211001171524947.png">
 <meta property="article:published_time" content="2021-09-09T03:24:29.224Z">
-<meta property="article:modified_time" content="2021-09-27T08:09:25.597Z">
+<meta property="article:modified_time" content="2021-10-01T09:15:34.028Z">
 <meta property="article:author" content="zhizhi">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/09/09/%E6%B1%87%E7%BC%96%E7%9B%B8%E5%85%B3/Users/zhizhi/AppData/Roaming/Typora/typora-user-images/image-20211001171524947.png">
   
     <link rel="alternative" href="/atom.xml" title="zhihzi的博客" type="application/atom+xml">
   
@@ -66,7 +68,7 @@
 			</ul>
 		</nav>
 		<nav>
-            总文章数 18
+            总文章数 19
         </nav>
 		<nav class="header-smart-menu">
     		
@@ -184,6 +186,12 @@
 <p>如果一个数是2的幂，会用<strong>左移指令shl</strong>来实现乘法运算。此外，加法对于提高3、5、6、7、9等数的乘法运算效率也非常有用。如，“eax<em>5”可以写成”lea eax,[eax+4</em>eax]”。lea指令可以实现寄存器乘以2、4或8的运算。</p>
 <h4 id="2、3-整数的除法"><a href="#2、3-整数的除法" class="headerlink" title="2、3 整数的除法"></a>2、3 整数的除法</h4><p>除法运算符一般被编译成div、idiv指令。除法运算的代价相当高，大概需要比乘法运算多消耗10倍的CPU时钟。</p>
 <p>如果除数是2的幂，可以使用右移指令“shr a,n”来替换，其中a是被除数，n是基数2的指数。若是进行符号数计算，则使用sar指令。</p>
+<p>push 立即数/32位寄存器              //ESP-4</p>
+<p>push ax                                          //EBP-2，push指令不允许使用8位的寄存器</p>
+<p>标志寄存器</p>
+<img src="/2021/09/09/%E6%B1%87%E7%BC%96%E7%9B%B8%E5%85%B3/Users\zhizhi\AppData\Roaming\Typora\typora-user-images\image-20211001171524947.png" alt="image-20211001171524947" style="zoom:50%;">
+
+<p>1、进位标志（Carry Flag）：如果运算的结果的最高位产生进位或借位，那么其值位1，否则为0。</p>
 
       
 

@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/11/29/%E6%A0%88%E5%B8%A7/2.png">
 <meta property="og:image" content="http://yoursite.com/2020/11/29/%E6%A0%88%E5%B8%A7/3.png">
 <meta property="article:published_time" content="2020-11-29T12:58:56.000Z">
-<meta property="article:modified_time" content="2021-09-27T09:13:48.567Z">
+<meta property="article:modified_time" content="2021-09-30T01:08:05.523Z">
 <meta property="article:author" content="zhizhi">
 <meta property="article:tag" content="核心工程，逆向原理">
 <meta name="twitter:card" content="summary">
@@ -71,7 +71,7 @@
 			</ul>
 		</nav>
 		<nav>
-            总文章数 18
+            总文章数 19
         </nav>
 		<nav class="header-smart-menu">
     		
@@ -270,7 +270,7 @@
 <li>将上一个栈帧底部位置恢复到 ebp <code>pop ebp</code></li>
 <li>弹出当前栈顶元素,从栈中取到返回地址,并跳转到该位置 <code>ret</code></li>
 </ul>
-<h4 id="3-x64应用程序调用约定"><a href="#3-x64应用程序调用约定" class="headerlink" title="3. x64应用程序调用约定"></a>3. x64应用程序调用约定</h4><p>x86应用程序的函数调用有stdcall、_cdecl、Fastcall等方式，但x64应用程序只有一种寄存器快速调用约定。前4个参数使用寄存器传递，如果参数超过4个，超出的就放在栈中，入栈顺序为从右到左，由调用方平衡栈空间。前4个参数存放的寄存器是固定的，分别是<strong>第1个参数RCX，第2个参数RDX，第3个参数R8，第4个参数R9，其他参数从右到左依次入栈</strong>。任何大于8字节或者不是1字节、2字节、4字节、8字节的参数必须由引用来传递（地址传递）。所有浮点参数的传递都使用XMM寄存器来完成。其前4个参数的调用约定如下表。</p>
+<h4 id="3-x64应用程序调用约定"><a href="#3-x64应用程序调用约定" class="headerlink" title="3. x64应用程序调用约定"></a>3. x64应用程序调用约定</h4><p>x86应用程序的函数调用有stdcall、_cdecl、Fastcall等方式，但x64应用程序只有一种<strong>寄存器快速调用约定</strong>。前4个参数使用寄存器传递，如果参数超过4个，超出的就放在栈中，入栈顺序为从右到左，由调用方平衡栈空间。前4个参数存放的寄存器是固定的，分别是<strong>第1个参数RCX，第2个参数RDX，第3个参数R8，第4个参数R9，其他参数从右到左依次入栈</strong>。任何大于8字节或者不是1字节、2字节、4字节、8字节的参数必须由引用来传递（地址传递）。所有浮点参数的传递都使用XMM寄存器来完成。其前4个参数的调用约定如下表。</p>
 <table>
 <thead>
 <tr>
