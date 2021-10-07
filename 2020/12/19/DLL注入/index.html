@@ -209,14 +209,14 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>DLL注入是（DLL Injection）是渗透其他进程的最简单有效的方法，借助DLL注入，可以勾取API、改进程序、修复Bug。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>DLL注入指的是向运行中的其他进程强制插入特定的DLL文件。<br>从技术细节上来说，DLL注入命令其他进程自行调用LoadLibrary()API，加载用户指定的DLL文件。<br>DLL注入与一般DLL加载的区别在于，加载的目标进程是其自身或其他进程。</p>
 <blockquote>
 <p>DLL(Dynamic Linked Library)动态链接库<br>DLL被加载到进程后会自动运行DllMain()函数，用户可以把想执行的代码放到DllMain()函数，每当加载DLL时，添加的代码就会自然而然地得到执行。</p>
 </blockquote>
 <p>DLL注入方法：（1）创建远程线程（CreateRemoteThread() API）<br>                          （2）使用注册表（AppInit_DLLs值）<br>                          （3）消息勾取（SetWindowsHookEx() API）</p>
-<h3 id="1-CreateRemoteThread"><a href="#1-CreateRemoteThread" class="headerlink" title="1. CreateRemoteThread()"></a>1. CreateRemoteThread()</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CreateRemoteThread()</span><br><span class="line"><span class="function">HANDLE WINAPI <span class="title">CreateRemoteThread</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">__in HANDLE                   hProcess,        <span class="comment">//目标进程句柄</span></span></span></span><br><span class="line"><span class="function"><span class="params">__in LPSECURITY_ATTRIBUTES    lpThreadAttributes,</span></span></span><br><span class="line"><span class="function"><span class="params">__in SIZE_T                   dwStackSize,</span></span></span><br><span class="line"><span class="function"><span class="params">__in LPTHREAD_START_ROUTINE   lpStartAddress,   <span class="comment">//线程函数地址 </span></span></span></span><br><span class="line"><span class="function"><span class="params">__in LPVOID                   lpParameter,      <span class="comment">//线程参数地址 </span></span></span></span><br><span class="line"><span class="function"><span class="params">__in DWORD                    dwCreationFlags,</span></span></span><br><span class="line"><span class="function"><span class="params">__out LPDWORD                 lpThread</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="1-CreateRemoteThread"><a href="#1-CreateRemoteThread" class="headerlink" title="1. CreateRemoteThread()"></a>1. CreateRemoteThread()</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CreateRemoteThread()</span><br><span class="line"><span class="function">HANDLE WINAPI <span class="title">CreateRemoteThread</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">__in HANDLE                   hProcess,        <span class="comment">//目标进程句柄</span></span></span></span><br><span class="line"><span class="params"><span class="function">__in LPSECURITY_ATTRIBUTES    lpThreadAttributes,</span></span></span><br><span class="line"><span class="params"><span class="function">__in SIZE_T                   dwStackSize,</span></span></span><br><span class="line"><span class="params"><span class="function">__in LPTHREAD_START_ROUTINE   lpStartAddress,   <span class="comment">//线程函数地址 </span></span></span></span><br><span class="line"><span class="params"><span class="function">__in LPVOID                   lpParameter,      <span class="comment">//线程参数地址 </span></span></span></span><br><span class="line"><span class="params"><span class="function">__in DWORD                    dwCreationFlags,</span></span></span><br><span class="line"><span class="params"><span class="function">__out LPDWORD                 lpThread</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <p>CreateRemoteThread()函数最主要的功能就是驱使目标进程调用LoadLibrary()函数，进而加载指定的DLL文件。</p>
 <p>实际操作就是使用CreateRemoteThread()，lpStartAddress指向LoadLibraryA的地址，lpParameter指向DLL路径。当CreateRemoteThread()执行成功，就向目标进程调用LoadLibraryA加载我们的DLL</p>
@@ -490,15 +490,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Python灰帽子</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Latex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Windows PE权威指南</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -510,11 +510,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">python灰帽子</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Windows PE权威指南</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -522,11 +518,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">编程</a>
+                <a href="javascript:void(0)" class="js-tag color1">加密与解密</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">加密与解密</a>
+                <a href="javascript:void(0)" class="js-tag color5">Python灰帽子</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">python灰帽子</a>
               </li>
             
             <div class="clearfix"></div>

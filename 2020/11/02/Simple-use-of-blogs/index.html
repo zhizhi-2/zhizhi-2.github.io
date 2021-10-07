@@ -188,7 +188,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">560字</span>
+        <span class="post-count">562字</span>
       </span>
     </span>
 
@@ -208,7 +208,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>记录博客的基本书写语法</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <h3 id="1-markdown的基本语法"><a href="#1-markdown的基本语法" class="headerlink" title="1. markdown的基本语法"></a>1. markdown的基本语法</h3><h4 id="1-1-标题"><a href="#1-1-标题" class="headerlink" title="1.1 标题"></a>1.1 标题</h4><p>标题大小按数字由小到大逐级递减，快捷键<code>ctrl+数字键</code></p>
 <h4 id="1-2-下划线"><a href="#1-2-下划线" class="headerlink" title="1.2 下划线"></a>1.2 下划线</h4><p><u>下划线</u>，快捷键<code>ctrl+u</code></p>
@@ -231,7 +231,7 @@
 <p>这是引用</p>
 </blockquote>
 <p>快捷键<code>shift+ctrl+q</code>或<code>&gt;+引用文字</code></p>
-<h4 id="1-9-代码块"><a href="#1-9-代码块" class="headerlink" title="1.9 代码块"></a>1.9 代码块</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Hello MarkDawn World!"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="number">123456</span></span><br></pre></td></tr></table></figure>
+<h4 id="1-9-代码块"><a href="#1-9-代码块" class="headerlink" title="1.9 代码块"></a>1.9 代码块</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Hello MarkDawn World!&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="number">123456</span></span><br></pre></td></tr></table></figure>
 
 <p>快捷键 ````(英文输入法下tab键上的那个键)+编程语言`</p>
 <h4 id="1-10-表格"><a href="#1-10-表格" class="headerlink" title="1.10 表格"></a>1.10 表格</h4><table>
@@ -256,7 +256,7 @@
 <h4 id="1-15-脚注"><a href="#1-15-脚注" class="headerlink" title="1.15 脚注"></a>1.15 脚注</h4><p>脚注[^1]<br>方法：<code>文字+[^脚注]</code></p>
 <h4 id="1-16-上下标、高亮显示（需要在设置中打开）"><a href="#1-16-上下标、高亮显示（需要在设置中打开）" class="headerlink" title="1.16 上下标、高亮显示（需要在设置中打开）"></a>1.16 上下标、高亮显示（需要在设置中打开）</h4><p>上标：X^2^ 方法：<code>字母+^+数字+^</code><br>下标：H<del>2</del>O 方法：<code>字母+~字母~+字母</code><br>高亮：==高亮== 方法：<code>==文字==</code></p>
 <h3 id="2-hexo图片上传到github上的显示问题"><a href="#2-hexo图片上传到github上的显示问题" class="headerlink" title="2. hexo图片上传到github上的显示问题"></a>2. hexo图片上传到github上的显示问题</h3><p>在根目录下配置文件_config.yml 中有 post_asset_folder:false改为true。这样在建立文件时，Hexo会自动建立一个与文章同名的文件夹，这样就可以把与该文章相关的所有资源（图片）都放到那个文件夹里方便后面引用。如这里我放了一张test.jpg的图片。</p>
-<p>git bash安装插件：npm install <a href="https://github.com/7ym0n/hexo-asset-image" target="_blank" rel="noopener">https://github.com/7ym0n/hexo-asset-image</a> –save（这是个修改过的插件，经测试无问题），使用这个插件来引入图片，而不是网上那些方法里说的用传统md语法相对路径的方法。</p>
+<p>git bash安装插件：npm install <a target="_blank" rel="noopener" href="https://github.com/7ym0n/hexo-asset-image">https://github.com/7ym0n/hexo-asset-image</a> –save（这是个修改过的插件，经测试无问题），使用这个插件来引入图片，而不是网上那些方法里说的用传统md语法相对路径的方法。</p>
 <p><strong>插入图片时用这种方式</strong>：<img src="/2020/11/02/Simple-use-of-blogs/1.png" class title="This is an test image"></p>
 <p>其中test.jpg就是你要引用的图片，我这里就是test.jpg，后面的This is an test image是图片描述，可以自己修改。</p>
 <h3 id="3-文章过长的截断符"><a href="#3-文章过长的截断符" class="headerlink" title="3. 文章过长的截断符"></a>3. 文章过长的截断符</h3><p>插入<code>&lt;!--more--&gt;</code>即可</p>
@@ -508,15 +508,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Python灰帽子</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Latex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Windows PE权威指南</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -528,11 +528,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">python灰帽子</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Windows PE权威指南</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -540,11 +536,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">编程</a>
+                <a href="javascript:void(0)" class="js-tag color1">加密与解密</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">加密与解密</a>
+                <a href="javascript:void(0)" class="js-tag color5">Python灰帽子</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">python灰帽子</a>
               </li>
             
             <div class="clearfix"></div>

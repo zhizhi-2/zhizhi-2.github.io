@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/2021/10/07/%E9%AB%98%E7%BA%A7%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF/image-20211007201256732.png">
 <meta property="og:image" content="http://yoursite.com/2021/10/07/%E9%AB%98%E7%BA%A7%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF/image-20211007202254122.png">
 <meta property="article:published_time" content="2021-10-07T09:51:40.000Z">
-<meta property="article:modified_time" content="2021-10-07T13:28:54.976Z">
+<meta property="article:modified_time" content="2021-10-07T13:35:03.778Z">
 <meta property="article:author" content="zhizhi">
 <meta property="article:tag" content="核心工程，逆向原理">
 <meta name="twitter:card" content="summary">
@@ -191,7 +191,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">429字</span>
+        <span class="post-count">457字</span>
       </span>
     </span>
 
@@ -213,16 +213,20 @@
         <p>在一些程序中设计者为了防止程序被调试，常常加入了反调试技术，加大程序调试的难度，本文主要介绍了关于高级调试中的一些基础知识，便于后面应对反调试技术。</p>
 <span id="more"></span>
 
-<h3 id="1、TLS回调函数"><a href="#1、TLS回调函数" class="headerlink" title="1、TLS回调函数"></a>1、TLS回调函数</h3><h4 id="1、1-TLS结构"><a href="#1、1-TLS结构" class="headerlink" title="1、1 TLS结构"></a>1、1 TLS结构</h4><p>TLS（Thread Local Storage，线程局部存储）回调函数的条用运行要先于EP代码的执行，该特征使它可以作为一种反调试技术使用。</p>
-<p>TLS是各线程的独立的数据存储空间。使用TLS技术可在线程内部独立使用或修改进程的全局数据或静态数据。</p>
+<h3 id="1、TLS"><a href="#1、TLS" class="headerlink" title="1、TLS"></a>1、TLS</h3><h4 id="1、1-TLS结构"><a href="#1、1-TLS结构" class="headerlink" title="1、1 TLS结构"></a>1、1 TLS结构</h4><p>TLS是各线程的独立的数据存储空间。使用TLS技术可在线程内部独立使用或修改进程的全局数据或静态数据。</p>
 <p>若在编程中启用了TLS功能，PE头文件中就会设置TLS表（TLS Table）项目。如下图所示，IMAGE_TLS_DIRECTORY结构体位于RVA9310地址处。</p>
 <p><img src="/2021/10/07/%E9%AB%98%E7%BA%A7%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF/image-20211007182453570.png" alt="image-20211007182453570"></p>
 <p>使用PEView工具查看IMAGE_TLS_DIRECTORY结构体，各成员如下图所示。在代码逆向分析中涉及的比较重要的成员为AddressOfCallbacks，该值指向含有TLS回调函数地址（VA）的数组。这意味着可以向同一程序注册多个TLS回调函数（数组以NULL值结束）。</p>
 <p><img src="/2021/10/07/%E9%AB%98%E7%BA%A7%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF/image-20211007201256732.png" alt="image-20211007201256732"></p>
 <p>TLS回调函数地址数组如下图所示，该数组中存储的就是回调函数的地址。由图可知，该示例中仅注册了一个TLS函数（地址为401000）。进程启动时，在执行EP代码前，系统会逐一调用存储在该数组中的函数。</p>
 <p><img src="/2021/10/07/%E9%AB%98%E7%BA%A7%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF/image-20211007202254122.png" alt="image-20211007202254122"></p>
-<p>接下来从技术层面简单整理之前介绍的TLS回调函数。</p>
-<p>所谓TLS函数是指，每当<strong>创建/终止进程时</strong>会自动==调用==执行的函数。</p>
+<h4 id="1、2-TLS回调函数"><a href="#1、2-TLS回调函数" class="headerlink" title="1、2 TLS回调函数"></a>1、2 TLS回调函数</h4><p>接下来从技术层面简单整理之前介绍的TLS回调函数。</p>
+<p>所谓TLS函数是指，每当<strong>创建/终止进程时</strong>（前后共2次）会自动==调用==执行的函数。创建进程的主线程时也会自动调用回调函数，且其调用执行先于EP代码，该特征使它可以作为一种反调试技术使用。</p>
+<p>TLS回调函数的定义如下所示。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//TLS Callback函数定义</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
 <h3 id="2、TEB"><a href="#2、TEB" class="headerlink" title="2、TEB"></a>2、TEB</h3><p>哈哈哈哈</p>
 <p>hhhhhhh</p>
 <h3 id="2、TEB-1"><a href="#2、TEB-1" class="headerlink" title="2、TEB"></a>2、TEB</h3><h3 id="3、PEB"><a href="#3、PEB" class="headerlink" title="3、PEB"></a>3、PEB</h3><h3 id="4、SEH"><a href="#4、SEH" class="headerlink" title="4、SEH"></a>4、SEH</h3>
@@ -363,7 +367,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81TLS%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">1、TLS回调函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%811-TLS%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">1、1 TLS结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81TEB"><span class="toc-number">2.</span> <span class="toc-text">2、TEB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81TEB-1"><span class="toc-number">3.</span> <span class="toc-text">2、TEB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81PEB"><span class="toc-number">4.</span> <span class="toc-text">3、PEB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81SEH"><span class="toc-number">5.</span> <span class="toc-text">4、SEH</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81TLS"><span class="toc-number">1.</span> <span class="toc-text">1、TLS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%811-TLS%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">1、1 TLS结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%812-TLS%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">1、2 TLS回调函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81TEB"><span class="toc-number">2.</span> <span class="toc-text">2、TEB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81TEB-1"><span class="toc-number">3.</span> <span class="toc-text">2、TEB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81PEB"><span class="toc-number">4.</span> <span class="toc-text">3、PEB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81SEH"><span class="toc-number">5.</span> <span class="toc-text">4、SEH</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -475,15 +479,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Python灰帽子</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Latex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Windows PE权威指南</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -495,11 +499,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">python灰帽子</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Windows PE权威指南</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -507,11 +507,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">编程</a>
+                <a href="javascript:void(0)" class="js-tag color1">加密与解密</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">加密与解密</a>
+                <a href="javascript:void(0)" class="js-tag color5">Python灰帽子</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">python灰帽子</a>
               </li>
             
             <div class="clearfix"></div>

@@ -192,7 +192,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">519字</span>
+        <span class="post-count">521字</span>
       </span>
     </span>
 
@@ -212,7 +212,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><strong>问题描述：</strong>使用hexo d将博客部署到github上 时，出现了如下的错误。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <img src="/2020/12/01/hexo-d-%E6%97%B6Could-not-read-from-remote-repository/1.png" class title="报错图片">
 
@@ -228,7 +228,7 @@
 </li>
 </ul>
 <p>3、然后找到系统自动在.ssh文件夹下生成两个文件，id_rsa和id_rsa.pub，用记事本打开<code>id_rsa.pub</code>将全部的内容复制。</p>
-<p>4、打开<a href="https://github.com/，登陆你的账户，进入设置（Settings）" target="_blank" rel="noopener">https://github.com/，登陆你的账户，进入设置（Settings）</a></p>
+<p>4、打开<a target="_blank" rel="noopener" href="https://github.com/，登陆你的账户，进入设置（Settings）">https://github.com/，登陆你的账户，进入设置（Settings）</a></p>
 <img src="/2020/12/01/hexo-d-%E6%97%B6Could-not-read-from-remote-repository/2.png" class> 
 
 <p>5、将你复制的内容粘贴到key中</p>
@@ -238,13 +238,13 @@
 
 <p>8、在.ssh文件夹下新建一个config文件，不用写后缀名</p>
 <p>9、在config文件内写入以下内容并保存</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Host github<span class="selector-class">.com</span>                                  <span class="comment">/*服务器地址为github地址*/</span></span><br><span class="line">User <span class="string">"xxx@xx.com"</span>                          <span class="comment">/*github上的注册邮箱 为用户账号*/</span></span><br><span class="line">Hostname ssh<span class="selector-class">.github</span><span class="selector-class">.com</span>                 <span class="comment">/*服务器地址为github地址*/</span></span><br><span class="line">PreferredAuthentications publickey       <span class="comment">/*采用公匙*/</span></span><br><span class="line">IdentityFile ~/.ssh/id_rsa                    <span class="comment">/*公匙文件路径*/</span></span><br><span class="line">Port <span class="number">443</span>                                               <span class="comment">/*修改端口为443*/</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Host github.com                                  <span class="regexp">/*服务器地址为github地址*/</span></span><br><span class="line">User <span class="string">&quot;xxx@xx.com&quot;</span>                          <span class="regexp">/*github上的注册邮箱 为用户账号*/</span></span><br><span class="line">Hostname ssh.github.com                 <span class="regexp">/*服务器地址为github地址*/</span></span><br><span class="line">PreferredAuthentications publickey       <span class="regexp">/*采用公匙*/</span></span><br><span class="line">IdentityFile ~<span class="regexp">/.ssh/i</span>d_rsa                    <span class="regexp">/*公匙文件路径*/</span></span><br><span class="line">Port <span class="number">443</span>                                               <span class="regexp">/*修改端口为443*/</span></span><br></pre></td></tr></table></figure>
 
 <p>10、再次<code>ssh -T git@github.com</code></p>
 <img src="/2020/12/01/hexo-d-%E6%97%B6Could-not-read-from-remote-repository/4.png" class>
 
 <p>成功解决！！！</p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p><a href="https://www.cnblogs.com/cnlg123/p/7762889.html" target="_blank" rel="noopener">https://www.cnblogs.com/cnlg123/p/7762889.html</a><br><a href="https://www.jianshu.com/p/fe76f9867322" target="_blank" rel="noopener">https://www.jianshu.com/p/fe76f9867322</a></p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cnlg123/p/7762889.html">https://www.cnblogs.com/cnlg123/p/7762889.html</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fe76f9867322">https://www.jianshu.com/p/fe76f9867322</a></p>
 
       
 
@@ -504,15 +504,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Python灰帽子</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Latex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Windows PE权威指南</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -524,11 +524,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">python灰帽子</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Windows PE权威指南</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -536,11 +532,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">编程</a>
+                <a href="javascript:void(0)" class="js-tag color1">加密与解密</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">加密与解密</a>
+                <a href="javascript:void(0)" class="js-tag color5">Python灰帽子</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">python灰帽子</a>
               </li>
             
             <div class="clearfix"></div>
