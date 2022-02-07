@@ -6,16 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: Latex | zhihzi的博客</title>
+  <title>Locally Private Graph Neural Networks | zhihzi的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="菜菜子">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zhihzi的博客">
-<meta property="og:url" content="http://yoursite.com/tags/Latex/index.html">
+  <meta name="description" content="图神经网络(gnn)在各种图推理任务的学习节点表示方面表现出卓越的性能。然而，当节点表示涉及敏感或个人信息的人或与人相关的变量时，通过图形数据进行学习可能会引起隐私问题。在本文中，我们研究了节点数据隐私问题，其中图节点(例如，社交网络用户)有潜在的敏感数据，这些数据是保密的，但它们可能有利于中央服务器在图上训练GNN。为了解决这个问题，我们提出了一个基于局部差异隐私(LDP)的具有正式隐私保证的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Locally Private Graph Neural Networks">
+<meta property="og:url" content="http://yoursite.com/2022/02/07/Locally-Private-Graph-Neural-Networks/index.html">
 <meta property="og:site_name" content="zhihzi的博客">
-<meta property="og:description" content="菜菜子">
+<meta property="og:description" content="图神经网络(gnn)在各种图推理任务的学习节点表示方面表现出卓越的性能。然而，当节点表示涉及敏感或个人信息的人或与人相关的变量时，通过图形数据进行学习可能会引起隐私问题。在本文中，我们研究了节点数据隐私问题，其中图节点(例如，社交网络用户)有潜在的敏感数据，这些数据是保密的，但它们可能有利于中央服务器在图上训练GNN。为了解决这个问题，我们提出了一个基于局部差异隐私(LDP)的具有正式隐私保证的">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-02-07T15:03:59.000Z">
+<meta property="article:modified_time" content="2022-02-07T15:05:26.939Z">
 <meta property="article:author" content="zhizhi">
+<meta property="article:tag" content="文献阅读，MPC">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="zhihzi的博客" type="application/atom+xml">
@@ -151,60 +154,229 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Locally-Private-Graph-Neural-Networks" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/" class="archive-article-date">
-  	<time datetime="2020-12-03T07:22:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-03</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/03/Latex%E4%B8%AD%E6%8F%92%E5%85%A5%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE/">Latex中插入参考文献</a>
+    <h1 class="article-title" itemprop="name">
+      Locally Private Graph Neural Networks
     </h1>
   
 
-        <div class="article-info info-on-right">
+		<!--显示阅读次数-->
+
+  <br/>
+  <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+  <span class="icon-sort"></span>
+  <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+  </span>
+  </a>
+
+<!--显示阅读次数完毕-->
+
+        
+        <a href="/2022/02/07/Locally-Private-Graph-Neural-Networks/" class="archive-article-date">
+  	<time datetime="2022-02-07T15:03:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-07</time>
+</a>
+		 
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">663字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">2分</span>
+      </span>
+    </span>
+</div>
           
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>图神经网络(gnn)在各种图推理任务的学习节点表示方面表现出卓越的性能。然而，当节点表示涉及敏感或个人信息的人或与人相关的变量时，通过图形数据进行学习可能会引起隐私问题。在本文中，我们研究了节点数据隐私问题，其中图节点(例如，社交网络用户)有潜在的敏感数据，这些数据是保密的，但它们可能有利于中央服务器在图上训练GNN。为了解决这个问题，我们提出了一个基于局部差异隐私(LDP)的具有正式隐私保证的隐私保护、体系结构无关的GNN学习框架。具体来说，我们开发了一种局部私有机制来干扰和压缩节点特征，服务器可以有效地收集这些特征来逼近GNN的邻域聚合步骤。此外，为了提高估计的准确性，我们在GNN前添加了一个降噪层，称为KProp，它是基于节点特征的多跳聚合。最后，我们提出了一种具有私有噪声标签的鲁棒学习算法，其中我们再次受益于KProp的去噪能力，以提高节点分类的标签推理的准确性。在真实世界的数据集上进行的大量实验表明，我们的方法可以在低隐私损失的情况下保持令人满意的准确性。</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="一、基本信息"><a href="#一、基本信息" class="headerlink" title="一、基本信息"></a>一、基本信息</h3><h4 id="1、图神经网络（GNN）"><a href="#1、图神经网络（GNN）" class="headerlink" title="1、图神经网络（GNN）"></a>1、图神经网络（GNN）</h4><p>问题描述：服务器如何与节点协作，在不让私有数据离开节点的情况下训练GNN</p>
+<p>GNN要能够消除注入的噪声，第一层的聚合器函数必须:</p>
+<p>(i)以线性求和的形式存在，</p>
+<p>(ii)在足够大的节点特征集上进行计算。</p>
+<ul>
+<li><strong>multi-bit mechanism  ：</strong>我们发展了一种多维的LDP方法，通过扩展1位机制[11]进行多维特征采集，称为多位机制。它由一个用户端编码器和一个服务端整流器组成，设计最大的通信效率。</li>
+<li><strong>Kprop：</strong>为了解决第二个挑战，我们提出了一个简单但有效的图卷积层，称为KProp，它聚合来自扩展的邻域集的消息，该邻域集既包括直接邻域，也包括𝐾-hops以外的节点。通过将这一层添加到GNN中，我们既可以将我们的方法与任何GNN体系结构相结合，又可以提高对低度节点的图卷积估计精度。</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>扫码加好友啦🧐<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Latex</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">文献阅读，MPC</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2022/02/07/Locally-Private-Graph-Neural-Networks/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2022/01/20/Secure-Multi-party-Computation-of-Differentially-Private-Median/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Secure Multi-party Computation of Differentially Private Median</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">1.</span> <span class="toc-text">一、基本信息</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88GNN%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">1、图神经网络（GNN）</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -231,9 +403,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
