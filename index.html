@@ -64,7 +64,7 @@
 			</ul>
 		</nav>
 		<nav>
-            总文章数 19
+            总文章数 20
         </nav>
 		<nav class="header-smart-menu">
     		
@@ -152,6 +152,127 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-Secure Multi-party Computation of Differentially Private Median" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、基本信息"><a href="#一、基本信息" class="headerlink" title="一、基本信息"></a>一、基本信息</h3><p>目标：寻找基于差分隐私的中位数。</p>
+<p>现有的DP中位数查询方案有：</p>
+<ul>
+<li>LDP（需要大量的数据才能有较好的准确率）</li>
+<li>CDP（需要可信第三方）</li>
+<li>MPC（）</li>
+</ul>
+<p><strong>使用指数机制实现差分隐私</strong></p>
+<p>Li等人[48]注意到，拉普拉斯机制对中位数无效，因为(光滑)灵敏度可能很高。此外，他们为指数机制提供了一个中值效用函数，具有低的、数据独立的灵敏度，这是我们在协议中使用的。</p>
+<img src="/2022/02/07/Secure%20Multi-party%20Computation%20of%20Differentially%20Private%20Median/image-20220127130030395.png" alt="image-20220127130030395" style="zoom:50%;">
+
+<p><strong>效用函数的定义：</strong></p>
+<img src="/2022/02/07/Secure%20Multi-party%20Computation%20of%20Differentially%20Private%20Median/image-20220205215535198.png" alt="image-20220205215535198" style="zoom:50%;">
+
+<img src="/2022/02/07/Secure%20Multi-party%20Computation%20of%20Differentially%20Private%20Median/image-20220205215901154.png" alt="image-20220205215901154" style="zoom:50%;">
+
+<img src="/2022/02/07/Secure%20Multi-party%20Computation%20of%20Differentially%20Private%20Median/image-20220205215611530.png" alt="image-20220205215611530" style="zoom:50%;">
+
+<blockquote>
+<p>由定义5可知Δu=1/2，</p>
+</blockquote>
+<p><strong>对于MPC有两个挑战：</strong></p>
+<ol>
+<li>在计算U中所有可能输出的选择概率时，运行时间复杂度与数据空间U的大小呈线性关系，</li>
+<li>由于选择概率计算需要对浮点数进行jUj指数运算，所以这种通用机制对于一般的安全计算来说效率太低</li>
+</ol>
+<p>解决：</p>
+<ol>
+<li>将数据集划分为子范围，实现|U|的次线性运行时间，</li>
+<li>关注效用函数，它允许有效的选择概率计算。我们称这种效用函数为可分解的</li>
+</ol>
+<h3 id="二、-f-EM-……"><a href="#二、-f-EM-……" class="headerlink" title="二、$f_{EM}……*$"></a>二、$f_{EM}……*$</h3><p>$rank_D(x)=|{d|d\in D:d&lt;x}$</p>
+<p>对于大数据集，将其划分问k个子集，</p>
+<p>在高层次上，我们在每个迭代中有三个阶段:</p>
+<ol>
+<li><p>评估：每一方在本地计算每个子范围的效用分数的基础。</p>
+</li>
+<li><p>合并：他们将结果合并成一个全局结果并计算选择概率。</p>
+</li>
+<li><p>选择：最后，他们根据选择概率选择一个输出</p>
+</li>
+</ol>
+<p>每个子范围的选择都会增加总体的隐私损失$\epsilon$，我们通过提出三种协议来计算非归一化选择概率(我们称之为<strong>weights</strong>)，使用户能够在运行时间、隐私损失和准确性之间进行权衡</p>
+<img src="/2022/02/07/Secure%20Multi-party%20Computation%20of%20Differentially%20Private%20Median/image-20220127130917587.png" alt="image-20220127130917587" style="zoom:50%;">
+
+
+
+<img src="/2022/02/07/Secure%20Multi-party%20Computation%20of%20Differentially%20Private%20Median/image-20220127121337964.png" alt="image-20220127121337964" style="zoom:50%;">
+
+<img src="/2022/02/07/Secure%20Multi-party%20Computation%20of%20Differentially%20Private%20Median/image-20220205220105576.png" alt="image-20220205220105576" style="zoom: 67%;">
+
+<blockquote>
+<p>我们采用来自Aliasgari et al.[5]的符号，表示浮点数$f$为$(1−2s)(1−z)·v·2^x$，</p>
+<p>当值为负时设置符号位s，当值为零时设置零位z, $l_v$位有效位数v， $l_x$位指数x</p>
+<p>浮点值$f$的共享是一个4元组$(<v>,<x>,<s>,<z>)$，缩写为$<f>_{FL}$，</f></z></s></x></v></p>
+<p>$f.v$表示f中的有效位v</p>
+</blockquote>
+<h3 id="三、-EM"><a href="#三、-EM" class="headerlink" title="三、$EM^*$"></a>三、$EM^*$</h3><img src="/2022/02/07/Secure%20Multi-party%20Computation%20of%20Differentially%20Private%20Median/image-20220205221646300.png" alt="image-20220205221646300" style="zoom:50%;">
+
+<blockquote>
+<p>算法1根据中值效用从k个子范围中选择一个。</p>
+</blockquote>
+<img src="/2022/02/07/Secure%20Multi-party%20Computation%20of%20Differentially%20Private%20Median/image-20220205221710978.png" alt="image-20220205221710978" style="zoom:50%;">
+
+<blockquote>
+<p>在类似于[30]的算法2中，通过二分搜索实现了逆变换采样(inverse transform sampling，ITS)的选择。</p>
+<p>ITS在其累积分布函数的基础上，利用均匀分布实现任意分布。</p>
+<p>我们使用可分解的效用函数将各方数据的局部评估合并为联合数据的全局效用评分。接下来，我们提出了三种方法来有效地计算可分解效用函数的权重。</p>
+</blockquote>
+<img src="/2022/02/07/Secure%20Multi-party%20Computation%20of%20Differentially%20Private%20Median/image-20220205221742337.png" alt="image-20220205221742337" style="zoom: 67%;">
+
+<blockquote>
+<p>各方在本地计算排名，并将其合并成全局效用分数。这些分数的权重使用固定的e (ln(2))，让我们计算2u而不是exp(e·u)。</p>
+</blockquote>
+<img src="/2022/02/07/Secure%20Multi-party%20Computation%20of%20Differentially%20Private%20Median/image-20220205222026073.png" alt="image-20220205222026073" style="zoom: 67%;">
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/02/07/Secure%20Multi-party%20Computation%20of%20Differentially%20Private%20Median/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-高级逆向分析技术" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1080,104 +1201,6 @@
 
 
   
-    <article id="post-css样式常用属性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/27/css%E6%A0%B7%E5%BC%8F%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7/">css样式常用属性</a>
-    </h1>
-  
-
-		<!--显示阅读次数-->
-
-<!--显示阅读次数完毕-->
-
-        
-        <a href="/2021/01/27/css%E6%A0%B7%E5%BC%8F%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7/" class="archive-article-date">
-  	<time datetime="2021-01-27T02:52:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-27</time>
-</a>
-		 
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">255字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1分</span>
-      </span>
-    </span>
-</div>
-          
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1、字体的属性"><a href="#1、字体的属性" class="headerlink" title="1、字体的属性"></a>1、字体的属性</h3><p>介绍了css样式中的一些常用属性</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/27/css%E6%A0%B7%E5%BC%8F%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1192,7 +1215,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 zhizhi
+    		&copy; 2022 zhizhi
     	</div>
       	<div class="footer-right">
       		#<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
