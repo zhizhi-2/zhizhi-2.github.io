@@ -159,15 +159,19 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>title:  高级逆向分析技术<br>date:  2022-1-20 17:51:40<br>tags:  文献阅读，MPC</p>
+<p>title: Secure Multi-party Computation of Differentially Private Median<br>date: 2022-1-20 17:51:40<br>tags: 文献阅读，MPC</p>
 </blockquote>
-<h3 id="一、基本信息"><a href="#一、基本信息" class="headerlink" title="一、基本信息"></a>一、基本信息</h3><p>目标：寻找基于差分隐私的中位数。</p>
-<p>现有的DP中位数查询方案有：</p>
+<h3 id="一、基本信息"><a href="#一、基本信息" class="headerlink" title="一、基本信息"></a>一、基本信息</h3><p>目标：半诚实的用户计算基于排名的统计数据，特别是中位数。寻找基于差分隐私的中位数。</p>
 <ul>
+<li>高精度，即使对小数量或用户(小数据)</li>
+<li>强大的隐私保护，且支持大数据域</li>
+</ul>
+<p>现有的DP中位数查询方案有：</p>
+<ol>
 <li>LDP（需要大量的数据才能有较好的准确率）</li>
 <li>CDP（需要可信第三方）</li>
-<li>MPC（）</li>
-</ul>
+<li>MPC（无需可信第三方，高精度但是<strong>计算效率低</strong>）</li>
+</ol>
         
       
 
